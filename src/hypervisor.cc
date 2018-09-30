@@ -119,6 +119,7 @@ void Hypervisor::Initialize(Handle<Object> exports)
   Nan::SetPrototypeMethod(t, "lookupDomainById",            Domain::LookupById);
   Nan::SetPrototypeMethod(t, "lookupDomainByName",          Domain::LookupByName);
   Nan::SetPrototypeMethod(t, "lookupDomainByUUID",          Domain::LookupByUUID);
+  //Nan::SetPrototypeMethod(t, "listAllDomains",              Domain::ListAllDomains);
 
 #if LIBVIR_CHECK_VERSION(1,2,8)
   Nan::SetPrototypeMethod(t, "getAllDomainStats",           Domain::GetAllDomainStats);
@@ -141,6 +142,10 @@ void Hypervisor::Initialize(Handle<Object> exports)
   NODE_DEFINE_CONSTANT(exports, VIR_CPU_COMPARE_INCOMPATIBLE);
   NODE_DEFINE_CONSTANT(exports, VIR_CPU_COMPARE_IDENTICAL);
   NODE_DEFINE_CONSTANT(exports, VIR_CPU_COMPARE_SUPERSET);
+
+  // virConnectBaselineCPU
+  NODE_DEFINE_CONSTANT(exports, VIR_CONNECT_BASELINE_CPU_EXPAND_FEATURES);
+  NODE_DEFINE_CONSTANT(exports, VIR_CONNECT_BASELINE_CPU_MIGRATABLE);
 
   // virSecretUsageType
   NODE_DEFINE_CONSTANT(exports, VIR_SECRET_USAGE_TYPE_NONE);
@@ -508,14 +513,19 @@ NAN_METHOD(Hypervisor::GetBaselineCPU)
   Nan::HandleScope scope;
 
   if (info.Length() == 0 ||
-      (info.Length() < 2 && (!info[0]->IsArray() && !info[1]->IsFunction()))) {
-    Nan::ThrowTypeError("You must specify an array with two cpu descriptions and a callback");
+      (info.Length() < 3 && (!info[0]->IsArray() && !info[1]->IsArray() && !info[2]->IsFunction()))) {
+    Nan::ThrowTypeError("You must specify an array with two cpu descriptions, flags and a callback");
     return;
   }
 
   Local<Array> cpusArguments = info[0].As<Array>();
 
   int flags = 0;
+  Local<Array> flags_ = Local<Array>::Cast(info[1]);
+  unsigned int length = flags_->Length();
+  for (unsigned int i = 0; i < length; i++)
+    flags |= flags_->Get(Nan::New<Integer>(i))->Int32Value();
+  
   int count = cpusArguments->Length();
   char **cpus = new char*[count + 1];
   cpus[count] = NULL;
@@ -576,6 +586,38 @@ NLV_WORKER_EXECUTE(Hypervisor, CompareCPU)
 
   data_ = result;
 }
+
+// NAN_METHOD(Hypervisor::ListAllDomains)
+// {
+//   NLV_WORKER_ASSERT_CONNECTION();
+//   Nan::HandleScope scope;
+//   unsigned int flags = GetFlags(info[0]);
+//   if (info.Length() < 2) {
+//     Nan::ThrowTypeError("You must specify a type and callback");
+//     return;
+//   }
+
+//   if (!info[1]->IsFunction()) {
+//     Nan::ThrowTypeError("Second argument must be a callback");
+//     return;
+//   }
+
+//   virDomainPtr *domains;
+
+//   int ret = virConnectListAllDomains(Handle(), &domains, flags);
+//   if (ret == -1)
+//   {
+//     SET_ERROR_WITH_CONTEXT(virSaveLastError());
+//     return;
+//   }
+
+//   for (i = 0; i < ret; i++) {
+//      domains[i];
+//      //here or in a separate loop if needed
+//      virDomainFree(domains[i]);
+//   }
+//   free(domains);
+// }
 
 #define HYPERVISOR_STRING_LIST_RETURN_EXECUTE(WorkerName, CountMethod, ListMethod)  \
   void Hypervisor::WorkerName##Worker::Execute() {  \

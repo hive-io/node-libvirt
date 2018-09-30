@@ -63,6 +63,7 @@ private:
   static NAN_METHOD(SetKeepAlive);
   static NAN_METHOD(GetBaselineCPU);
 
+  //static NAN_METHOD(ListAllDomains);
   static NAN_METHOD(ListDefinedDomains);
   static NAN_METHOD(ListDefinedNetworks);
   static NAN_METHOD(ListDefinedStoragePools);
