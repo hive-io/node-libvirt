@@ -533,7 +533,7 @@ NAN_METHOD(Hypervisor::GetBaselineCPU)
     cpus[i] = strdup(*Nan::Utf8String(cpusArguments->Get(Nan::New(i))->ToString()));
   }
 
-  Nan::Callback *callback = new Nan::Callback(info[1].As<Function>());
+  Nan::Callback *callback = new Nan::Callback(info[2].As<Function>());
   Hypervisor *hypervisor = Hypervisor::Unwrap(info.This());
   Nan::AsyncQueueWorker(new GetBaselineCPUWorker(callback, hypervisor->virHandle(), cpus, count, flags));
   return;
