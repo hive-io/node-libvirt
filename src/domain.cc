@@ -502,7 +502,7 @@ NAN_METHOD(Domain::IsUpdated)
 
 NAN_METHOD(Domain::Start)
 {
-  RunMethod(info, virDomainCreate);
+  RunMethod(info, virDomainCreateWithFlags, GetFlags(info[0]));
 }
 
 NAN_METHOD(Domain::Reboot)

@@ -60,12 +60,12 @@ NAN_METHOD(StorageVolume::Create)
   });
 }
 
-NLV_WORKER_METHOD_NO_ARGS(StorageVolume, Delete)
+NLV_WORKER_METHOD_FLAGS(StorageVolume, Delete)
 NLV_WORKER_EXECUTE(StorageVolume, Delete)
 {
   NLV_WORKER_ASSERT_STORAGEVOLUME();
   unsigned int flags = 0;
-  int result = virStorageVolDelete(Handle(), flags);
+  int result = virStorageVolDelete(Handle(), flags_);
   if (result == -1) {
     SET_ERROR_WITH_CONTEXT(virSaveLastError());
     return;
@@ -91,21 +91,28 @@ NLV_WORKER_EXECUTE(StorageVolume, Wipe)
 NAN_METHOD(StorageVolume::GetInfo)
 {
   Nan::HandleScope scope;
-  if (info.Length() != 1) {
-    Nan::ThrowTypeError("You must specify a callback");
+  unsigned int flags = 0;
+  if (info.Length() > 1 && info[1]->IsFunction())
+  {
+    callback = new Nan::Callback(info[1].As<Function>());
+    flags = GetFlags(info[0]);
+  } else if (info.Length() == 1 && info[0]->IsFunction()) {
+    callback = new Nan::Callback(info[0].As<Function>());
+  } else {
+    Nan::ThrowTypeError("signature is callback or flags, callback");
     return;
   }
 
   Nan::Callback *callback = new Nan::Callback(info[0].As<Function>());
   StorageVolume *storageVolume = StorageVolume::Unwrap(info.This());
-  Nan::AsyncQueueWorker(new GetInfoWorker(callback, storageVolume->virHandle()));
+  Nan::AsyncQueueWorker(new GetInfoWorker(callback, storageVolume->virHandle(), flags));
   return;
 }
 
 NLV_WORKER_EXECUTE(StorageVolume, GetInfo)
 {
   NLV_WORKER_ASSERT_STORAGEVOLUME();
-  int result = virStorageVolGetInfo(Handle(), &info_);
+  int result = virStorageVolGetInfoFlags(Handle(), &info_, flags_);
   if (result == -1) {
     SET_ERROR_WITH_CONTEXT(virSaveLastError());
     return;

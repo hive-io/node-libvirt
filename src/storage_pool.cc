@@ -126,13 +126,19 @@ NAN_METHOD(StoragePool::Create)
       (!info[0]->IsString() && !info[1]->IsFunction())) {
     Nan::ThrowTypeError("You must specify a string and callback");
     return;
+  } else if (info.Length() == 3 && (!info[0]->IsString() && !info[1]->IsNumber() && !info[2]->IsFunction())) {
+    Nan::ThrowTypeError("You must specify a string, flag and callback");
+    return;
   }
 
   auto hv = Hypervisor::UnwrapHandle(info.This());
   std::string xmlData(*Nan::Utf8String(info[0]->ToString()));
-
+  unsigned int flags = 0;
+  if (info.Length() == 3) {
+    flags = GetFlags(info[1]);
+  }
   Worker::RunAsync(info, [=](Worker::SetOnFinishedHandler onFinished) {
-    auto lookupHandle = virStoragePoolCreateXML(hv, xmlData.c_str(), 0);
+    auto lookupHandle = virStoragePoolCreateXML(hv, xmlData.c_str(), flags);
     if (lookupHandle == NULL) {
       return virSaveLastError();
     }
@@ -143,8 +149,7 @@ NAN_METHOD(StoragePool::Create)
 NLV_WORKER_EXECUTE(StoragePool, Create)
 {
   NLV_WORKER_ASSERT_PARENT_HANDLE();
-  unsigned int flags = 0;
-  lookupHandle_ = virStoragePoolCreateXML(parent_->virHandle(), value_.c_str(), flags);
+  lookupHandle_ = virStoragePoolCreateXML(parent_->virHandle(), value_.c_str(), flags_);
   if (lookupHandle_ == NULL) {
     SET_ERROR_WITH_CONTEXT(virSaveLastError());
     return;
@@ -190,12 +195,12 @@ NLV_WORKER_EXECUTE(StoragePool, Undefine)
   data_ = true;
 }
 
-NLV_WORKER_METHOD_NO_ARGS(StoragePool, Start)
+NLV_WORKER_METHOD_FLAGS(StoragePool, Start)
 NLV_WORKER_EXECUTE(StoragePool, Start)
 {
   NLV_WORKER_ASSERT_STORAGEPOOL();
-  unsigned int flags = 0;
-  int result = virStoragePoolCreate(Handle(), flags);
+  //unsigned int flags = 0;
+  int result = virStoragePoolCreate(Handle(), flags_);
   if (result == -1) {
     SET_ERROR_WITH_CONTEXT(virSaveLastError());
     return;
