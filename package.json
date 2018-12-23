@@ -8,6 +8,9 @@
   },
   "contributors": [
     {
+      "name": "Pratik Gaikawd"
+    },
+    {
       "name": "Matt Broadstone",
       "email": "mbroadst@gmail.com"
     },
@@ -71,5 +74,5 @@
     "xpath": "^0.0.27",
     "xmldom": "^0.1.27"
   },
-  "types": "./typings/index.d.ts"
+  "types": "typings/index.d.ts"
 }
