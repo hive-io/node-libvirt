@@ -70,5 +70,6 @@
     "semver": "^5.5.1",
     "xpath": "^0.0.27",
     "xmldom": "^0.1.27"
-  }
+  },
+  "types": "./typings/index.d.ts"
 }
