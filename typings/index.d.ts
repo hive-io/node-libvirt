@@ -905,18 +905,15 @@ export declare interface Hypervisor {
     /**
      * Create a new storage based on its XML description. The pool is not persistent, so its definition will disappear when it is destroyed, or if the host is restarted
      * @param {string} storagePoolXml XML description for new pool
-     * @param {number} [flags] bitwise-OR of `StoragePoolCreateFlags`
      * @param {function(Error, StoragePool | null)} callback `StoragePool` object if successful, NULL in case of failure
      */
     createStoragePool(storagePoolXml: string, callback: (error: Error, result: StoragePool | null) => void): void
-    createStoragePool(storagePoolXml: string, flags: number, callback: (error: Error, result: StoragePool | null) => void): void
     /**
      * Create a new storage based on its XML description. The pool is not persistent, so its definition will disappear when it is destroyed, or if the host is restarted
      * @param {string} storagePoolXml XML description for new pool
-     * @param {number} [flags] bitwise-OR of `StoragePoolCreateFlags`
      * @returns {bluebird<StoragePool> | null} `StoragePool` object if successful, NULL in case of failure
      */
-    createStoragePoolAsync(storagePoolXml: string, flags?: number): bluebird<StoragePool> | null;
+    createStoragePoolAsync(storagePoolXml: string): bluebird<StoragePool> | null;
     /**
      * Define a domain, but does not start it. This definition is persistent, until explicitly undefined with `Domain.undefineDomain`. 
      * A previous definition for this domain would be overridden if it already exists.
@@ -1511,17 +1508,14 @@ export declare interface StoragePool {
     refreshAsync(): bluebird<boolean>;
     /**
      * Starts an inactive storage pool
-     * @param {number | Array<StoragePoolCreateFlags>} [flags] bitwise-OR of `StoragePoolCreateFlags` or Array of bitwise-OR of `StoragePoolCreateFlags`
      * @param {function(Error, boolean)} callback True in case of success, false otherwise
      */
     start(callback: (error: Error, result: boolean) => void): void;
-    start(flags: number | Array<StoragePoolCreateFlags>, callback: (error: Error, result: boolean) => void): void;
     /**
      * Starts an inactive storage pool
-     * @param {number | Array<StoragePoolCreateFlags>} [flags] bitwise-OR of `StoragePoolCreateFlags` or Array of bitwise-OR of `StoragePoolCreateFlags`
      * @returns {bluebird<boolean>} True in case of success, false otherwise
      */
-    startAsync(flags?: number | Array<StoragePoolCreateFlags>): bluebird<boolean>;
+    startAsync(): bluebird<boolean>;
     /**
      * Destroy an active storage pool. This will deactivate the pool on the host, but keep any persistent config associated with it.
      * @param {function(Error, boolean)} callback True in case of success, false otherwise
@@ -1553,17 +1547,14 @@ export declare interface StoragePool {
 export declare interface StorageVolume {
     /**
      * Fetches volatile information about the storage volume such as its current allocation.
-     * @param {number | Array<StorageVolInfoFlags>} [flags] bitwise-OR of `StorageVolInfoFlags` or Array of bitwise-OR of `StorageVolInfoFlags`
      * @param {function(Error, StorageVolInfo)} callback returns Info about a storage volume
      */
     getInfo(callback:(error: Error, result: StorageVolInfo) => void): void;
-    getInfo(flags: number | Array<StorageVolInfoFlags>, callback:(error: Error, result: StorageVolInfo) => void): void;
     /**
      * Fetches volatile information about the storage volume such as its current allocation.
-     * @param {number | Array<StorageVolInfoFlags>} [flags] bitwise-OR of `StorageVolInfoFlags` or Array of bitwise-OR of `StorageVolInfoFlags`
      * @returns {bluebird<StorageVolInfo>)} returns Info about a storage volume
      */
-    getInfoAsync(flags: number | Array<StorageVolInfoFlags>): bluebird<StorageVolInfo>;
+    getInfoAsync(): bluebird<StorageVolInfo>;
     /**
      * Fetch the storage volume key. This is globally unique, so the same volume will have the same key no matter what host it is accessed from
      * @param {function(Error, string)} callback returns the volume key, or NULL on error
@@ -1596,17 +1587,14 @@ export declare interface StorageVolume {
     getPathAsync(): bluebird<string>;
     /**
      * Delete the storage volume from the pool
-     * @param {number | Array<StorageVolDeleteFlags>} [flags] bitwise-OR of `StorageVolDeleteFlags` or Array of `StorageVolDeleteFlags`
      * @param {function(Error, boolean)} callback True in case of success, false otherwise
      */
     remove(callback:(error: Error, result: boolean) => void): void;
-    remove(flags: number | Array<StorageVolDeleteFlags>, callback:(error: Error, result: boolean) => void): void;
     /**
      * Delete the storage volume from the pool
-     * @param {number | Array<StorageVolDeleteFlags>} [flags] bitwise-OR of `StorageVolDeleteFlags` or Array of `StorageVolDeleteFlags`
      * @returns {bluebird<boolean>} True in case of success, false otherwise
      */
-    removeAsync(flags?: number | Array<StorageVolDeleteFlags>): bluebird<boolean>;
+    removeAsync(): bluebird<boolean>;
     /**
      * Fetch an XML document describing all aspects of the storage volume
      * @param {function(Error, string)} callback a XML document describing storage volume
