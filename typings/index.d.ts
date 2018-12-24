@@ -1,5 +1,5 @@
 import * as bluebird from 'bluebird';
-export declare interface Libvirt {
+export declare var Libvirt: {
     VIR_CRED_USERNAME: 1;
     VIR_CRED_AUTHNAME: 2;
     VIR_CRED_LANGUAGE: 3;
@@ -138,30 +138,30 @@ export declare interface Libvirt {
     VIR_ERR_NONE: 0;
     VIR_ERR_WARNING: 1;
     VIR_ERR_ERROR: 2;
-    VIR_DOMAIN_DEVICE_MODIFY_CURRENT: 0;
-    VIR_DOMAIN_DEVICE_MODIFY_LIVE: 1;
-    VIR_DOMAIN_DEVICE_MODIFY_CONFIG: 2;
-    VIR_DOMAIN_DEVICE_MODIFY_FORCE: 4;
-    VIR_DOMAIN_METADATA_DESCRIPTION: 0;
-    VIR_DOMAIN_METADATA_TITLE: 1;
-    VIR_DOMAIN_METADATA_ELEMENT: 2;
-    VIR_MIGRATE_LIVE: 1;
-    VIR_MIGRATE_PEER2PEER: 2;
-    VIR_MIGRATE_TUNNELLED: 4;
-    VIR_MIGRATE_PERSIST_DEST: 8;
-    VIR_MIGRATE_UNDEFINE_SOURCE: 16;
-    VIR_MIGRATE_PAUSED: 32;
-    VIR_MIGRATE_NON_SHARED_DISK: 64;
-    VIR_MIGRATE_NON_SHARED_INC: 128;
-    VIR_MIGRATE_CHANGE_PROTECTION: 256;
-    VIR_MIGRATE_UNSAFE: 512;
-    VIR_MIGRATE_OFFLINE: 1024;
-    VIR_MIGRATE_COMPRESSED: 2048;
-    VIR_MIGRATE_ABORT_ON_ERROR: 4096;
-    VIR_MIGRATE_AUTO_CONVERGE: 8192;
-    VIR_MIGRATE_RDMA_PIN_ALL: 16384;
-    VIR_MIGRATE_POSTCOPY: 32768;
-    VIR_MIGRATE_TLS: 65536;
+    // VIR_DOMAIN_DEVICE_MODIFY_CURRENT: 0;
+    // VIR_DOMAIN_DEVICE_MODIFY_LIVE: 1;
+    // VIR_DOMAIN_DEVICE_MODIFY_CONFIG: 2;
+    // VIR_DOMAIN_DEVICE_MODIFY_FORCE: 4;
+    // VIR_DOMAIN_METADATA_DESCRIPTION: 0;
+    // VIR_DOMAIN_METADATA_TITLE: 1;
+    // VIR_DOMAIN_METADATA_ELEMENT: 2;
+    // VIR_MIGRATE_LIVE: 1;
+    // VIR_MIGRATE_PEER2PEER: 2;
+    // VIR_MIGRATE_TUNNELLED: 4;
+    // VIR_MIGRATE_PERSIST_DEST: 8;
+    // VIR_MIGRATE_UNDEFINE_SOURCE: 16;
+    // VIR_MIGRATE_PAUSED: 32;
+    // VIR_MIGRATE_NON_SHARED_DISK: 64;
+    // VIR_MIGRATE_NON_SHARED_INC: 128;
+    // VIR_MIGRATE_CHANGE_PROTECTION: 256;
+    // VIR_MIGRATE_UNSAFE: 512;
+    // VIR_MIGRATE_OFFLINE: 1024;
+    // VIR_MIGRATE_COMPRESSED: 2048;
+    // VIR_MIGRATE_ABORT_ON_ERROR: 4096;
+    // VIR_MIGRATE_AUTO_CONVERGE: 8192;
+    // VIR_MIGRATE_RDMA_PIN_ALL: 16384;
+    // VIR_MIGRATE_POSTCOPY: 32768;
+    // VIR_MIGRATE_TLS: 65536;
     VIR_DOMAIN_SNAPSHOT_CREATE_REDEFINE: 1;
     VIR_DOMAIN_SNAPSHOT_CREATE_CURRENT: 2;
     VIR_DOMAIN_SNAPSHOT_CREATE_NO_METADATA: 4;
@@ -174,9 +174,9 @@ export declare interface Libvirt {
     VIR_DOMAIN_SNAPSHOT_DELETE_CHILDREN: 1;
     VIR_DOMAIN_SNAPSHOT_DELETE_CHILDREN_ONLY: 4;
     VIR_DOMAIN_SNAPSHOT_DELETE_METADATA_ONLY: 2;
-    VIR_DOMAIN_AFFECT_CURRENT: 0;
-    VIR_DOMAIN_AFFECT_LIVE: 1;
-    VIR_DOMAIN_AFFECT_CONFIG: 2;
+    // VIR_DOMAIN_AFFECT_CURRENT: 0;
+    // VIR_DOMAIN_AFFECT_LIVE: 1;
+    // VIR_DOMAIN_AFFECT_CONFIG: 2;
     VIR_DOMAIN_BLOCK_COMMIT_SHALLOW: 1;
     VIR_DOMAIN_BLOCK_COMMIT_DELETE: 2;
     VIR_DOMAIN_BLOCK_COMMIT_ACTIVE: 4;
@@ -190,10 +190,10 @@ export declare interface Libvirt {
     VIR_DOMAIN_BLOCK_JOB_TYPE_COPY: 2;
     VIR_DOMAIN_BLOCK_JOB_TYPE_COMMIT: 3;
     VIR_DOMAIN_BLOCK_JOB_TYPE_ACTIVE_COMMIT: 4;
-    VIR_DOMAIN_XML_SECURE: 1;
-    VIR_DOMAIN_XML_INACTIVE: 2;
-    VIR_DOMAIN_XML_UPDATE_CPU: 4;
-    VIR_DOMAIN_XML_MIGRATABLE: 8;
+    // VIR_DOMAIN_XML_SECURE: 1;
+    // VIR_DOMAIN_XML_INACTIVE: 2;
+    // VIR_DOMAIN_XML_UPDATE_CPU: 4;
+    // VIR_DOMAIN_XML_MIGRATABLE: 8;
     VIR_DOMAIN_JOB_NONE: 0;
     VIR_DOMAIN_JOB_BOUNDED: 1;
     VIR_DOMAIN_JOB_UNBOUNDED: 2;
@@ -410,9 +410,9 @@ export declare enum BaselineCPUFlags {
 }
 
 export declare enum DomainDeviceModifyFlags {
-    VIR_DOMAIN_DEVICE_MODIFY_CONFIG = 2,
     VIR_DOMAIN_DEVICE_MODIFY_CURRENT = 0,
     VIR_DOMAIN_DEVICE_MODIFY_LIVE = 1,
+    VIR_DOMAIN_DEVICE_MODIFY_CONFIG = 2,
     VIR_DOMAIN_DEVICE_MODIFY_FORCE = 4
 }
 
@@ -424,31 +424,31 @@ export declare enum DomainState {
     /**
      * the domain is running
      */
-    VIR_DOMAIN_RUNNING= "running",
+    VIR_DOMAIN_RUNNING = "running",
     /**
      * the domain is blocked on resource
      */
-    VIR_DOMAIN_BLOCKED= "idle",
+    VIR_DOMAIN_BLOCKED = "idle",
     /**
      * the domain is paused by user
      */
-    VIR_DOMAIN_PAUSED= "paused",
+    VIR_DOMAIN_PAUSED = "paused",
     /**
      * the domain is being shut down
      */
-    VIR_DOMAIN_SHUTDOWN= "in shutdown",
+    VIR_DOMAIN_SHUTDOWN = "in shutdown",
     /**
      * the domain is shut off
      */
-    VIR_DOMAIN_SHUTOFF= "shut off",
+    VIR_DOMAIN_SHUTOFF = "shut off",
     /**
      * the domain is crashed
      */
-    VIR_DOMAIN_CRASHED= "crashed",
+    VIR_DOMAIN_CRASHED = "crashed",
     /**
      * the domain is suspended by guest power management
      */
-    VIR_DOMAIN_PMSUSPENDED= "pmsuspended"
+    VIR_DOMAIN_PMSUSPENDED = "pmsuspended"
 }
 
 export declare interface DomainInfo {
@@ -506,7 +506,7 @@ export declare enum DomainMetadataType {
     VIR_DOMAIN_METADATA_LAST = 3
 }
 
-export declare enum DomainModificationImpact {
+export declare enum DomainModificationImpactFlag {
     /**
      * Affect current domain state.
      */
@@ -866,116 +866,116 @@ export declare interface Hypervisor {
      * or if the host is restarted (use `defineDomain` to define persistent domains).
      * @param {string} domainXml string containing an XML description of the domain
      * @param {number | Array<DomainCreateFlags>} [flags] bitwise-OR of supported `DomainCreateFlags` or Array of `DomainCreateFlags`
-     * @param {function(Error, Domain | null)} callback a new `Domain` object or NULL in case of failure 
+     * @param {function(Error, Domain)} callback a new `Domain` object or NULL in case of failure 
      */
-    createDomain(domainXml: string, callback:(error: Error, result: Domain | null) => void): void
-    createDomain(domainXml: string, flags: number | Array<DomainCreateFlags>, callback:(error: Error, result: Domain | null) => void): void
+    createDomain(domainXml: string, callback:(error: Error, result: Domain) => void): void
+    createDomain(domainXml: string, flags: number | Array<DomainCreateFlags>, callback:(error: Error, result: Domain) => void): void
     /**
      * Launch a new guest domain, based on an XML description. The domain is not persistent, so its definition will disappear when it is destroyed,
      * or if the host is restarted (use `defineDomainAsync`} to define persistent domains).
      * @param {string} domainXml string containing an XML description of the domain
      * @param {number} [flags] bitwise-OR of supported `DomainCreateFlags` or Array of `DomainCreateFlags`
-     * @returns {bluebird<Domain> | null} a new `Domain` object or NULL in case of failure 
+     * @returns {bluebird<Domain>} a new `Domain` object or NULL in case of failure 
      */
-    createDomainAsync(domainXml: string, flags?: number | Array<DomainCreateFlags>): bluebird<Domain> | null;
+    createDomainAsync(domainXml: string, flags?: number | Array<DomainCreateFlags>): bluebird<Domain>;
     /**
      * Create and start a new virtual network, based on an XML description
      * @param {string} networkXml an XML description of the network
-     * @param {function(Error, Network | null)} callback a new `Network` object or NULL in case of failure
+     * @param {function(Error, Network)} callback a new `Network` object or NULL in case of failure
      */
-    createNetwork(networkXml: string,callback: (error: Error, result: Network | null) => void): void
+    createNetwork(networkXml: string,callback: (error: Error, result: Network) => void): void
     /**
      * Create and start a new virtual network, based on an XML description
      * @param {string} networkXml an XML description of the network
-     * @returns {bluebird<Network> | null} a new `Network` object or NULL in case of failure
+     * @returns {bluebird<Network>} a new `Network` object or NULL in case of failure
      */
-    createNetworkAsync(networkXml: string): bluebird<Network> | null;
+    createNetworkAsync(networkXml: string): bluebird<Network>;
     /**
      * Create a new device on the VM host machine, for example, virtual HBAs created using vport_create.
      * @param {string} deviceXml string containing an XML description of the device to be created
-     * @param {function(Error, NodeDevive | null)} callback A `NodeDevice` object if successful, NULL in case of failure
+     * @param {function(Error, NodeDevive)} callback A `NodeDevice` object if successful, NULL in case of failure
      */
-    createNodeDevice(deviceXml: string, callback: (error: Error, result: NodeDevive | null) => void): void
+    createNodeDevice(deviceXml: string, callback: (error: Error, result: NodeDevive) => void): void
     /**
      * Create a new device on the VM host machine, for example, virtual HBAs created using vport_create.
      * @param {string} deviceXml string containing an XML description of the device to be created
-     * @returns {bluebird<NodeDevive> | null} A `NodeDevice` object if successful, NULL in case of failure
+     * @returns {bluebird<NodeDevive>} A `NodeDevice` object if successful, NULL in case of failure
      */
-    createNodeDeviceAsync(deviceXml: string): bluebird<NodeDevive> | null;
+    createNodeDeviceAsync(deviceXml: string): bluebird<NodeDevive>;
     /**
      * Create a new storage based on its XML description. The pool is not persistent, so its definition will disappear when it is destroyed, or if the host is restarted
      * @param {string} storagePoolXml XML description for new pool
-     * @param {function(Error, StoragePool | null)} callback `StoragePool` object if successful, NULL in case of failure
+     * @param {function(Error, StoragePool)} callback `StoragePool` object if successful, NULL in case of failure
      */
-    createStoragePool(storagePoolXml: string, callback: (error: Error, result: StoragePool | null) => void): void
+    createStoragePool(storagePoolXml: string, callback: (error: Error, result: StoragePool) => void): void
     /**
      * Create a new storage based on its XML description. The pool is not persistent, so its definition will disappear when it is destroyed, or if the host is restarted
      * @param {string} storagePoolXml XML description for new pool
-     * @returns {bluebird<StoragePool> | null} `StoragePool` object if successful, NULL in case of failure
+     * @returns {bluebird<StoragePool>} `StoragePool` object if successful, NULL in case of failure
      */
-    createStoragePoolAsync(storagePoolXml: string): bluebird<StoragePool> | null;
+    createStoragePoolAsync(storagePoolXml: string): bluebird<StoragePool>;
     /**
      * Define a domain, but does not start it. This definition is persistent, until explicitly undefined with `Domain.undefineDomain`. 
      * A previous definition for this domain would be overridden if it already exists.
      * @param {string} domainXml the XML description for the domain, preferably in UTF-8
-     * @param {function(Error, Domain | null)} callback `Domain` object if successful, NULL in case of failure
+     * @param {function(Error, Domain)} callback `Domain` object if successful, NULL in case of failure
      */
-    defineDomain(domainXml: string, callback: (error: Error, result: Domain | null) => void): void
+    defineDomain(domainXml: string, callback: (error: Error, result: Domain) => void): void
     /**
      * Define a domain, but does not start it. This definition is persistent, until explicitly undefined with `Domain.undefineDomainAsync`. 
      * A previous definition for this domain would be overridden if it already exists.
      * @param {string} domainXml the XML description for the domain, preferably in UTF-8
-     * @returns {bluebird<Domain> | null} `Domain` object if successful, NULL in case of failure
+     * @returns {bluebird<Domain>} `Domain` object if successful, NULL in case of failure
      */
-    defineDomainAsync(domainXml: string): bluebird<Domain> | null;
+    defineDomainAsync(domainXml: string): bluebird<Domain>;
     /**
      * Define an inactive persistent physical host interface or modify an existing persistent one from the XML description.
      * @param {string} interfaceXml the XML description for the interface, preferably in UTF-8
-     * @param {function(Error, Interface | null)} callback `Interface` object if successful, NULL in case of failure
+     * @param {function(Error, Interface)} callback `Interface` object if successful, NULL in case of failure
      */
-    defineInterface(interfaceXml: string, callback: (error:Error, result: Interface | null) => void): void
+    defineInterface(interfaceXml: string, callback: (error:Error, result: Interface) => void): void
     /**
      * Define an inactive persistent physical host interface or modify an existing persistent one from the XML description.
      * @param {string} interfaceXml the XML description for the interface, preferably in UTF-8
-     * @returns {bluebird<Interface> | null} `Interface` object if successful, NULL in case of failure
+     * @returns {bluebird<Interface>} `Interface` object if successful, NULL in case of failure
      */
-    defineInterfaceAsync(interfaceXml: string): bluebird<Interface> | null;
+    defineInterfaceAsync(interfaceXml: string): bluebird<Interface> ;
     /**
      * Define an inactive persistent virtual network or modify an existing persistent one from the XML description.
      * @param {string} networkXml the XML description for the network, preferably in UTF-8
-     * @param {function(Error, Network | null)} callback `Network` object if successful, NULL in case of failure
+     * @param {function(Error, Network)} callback `Network` object if successful, NULL in case of failure
      */
-    defineNetwork(networkXml: string, callback: (error: Error, result: Network | null) => void): void
+    defineNetwork(networkXml: string, callback: (error: Error, result: Network) => void): void
     /**
      * Define an inactive persistent virtual network or modify an existing persistent one from the XML description.
      * @param {string} networkXml the XML description for the network, preferably in UTF-8
-     * @returns {bluebird<Network> | null} `Network` object if successful, NULL in case of failure
+     * @returns {bluebird<Network>} `Network` object if successful, NULL in case of failure
      */
-    defineNetworkAsync(networkXml: string): bluebird<Network> | null;
+    defineNetworkAsync(networkXml: string): bluebird<Network>;
     /**
      * Define a new network filter, based on an XML description
      * @param {string} networkFilterXml an XML description of the nwfilter
-     * @param {function(Error, NetworkFilter | null)} callback `NetworkFilter` object if successful, NULL in case of failure
+     * @param {function(Error, NetworkFilter)} callback `NetworkFilter` object if successful, NULL in case of failure
      */
-    defineNetworkFilter(networkFilterXml: string, callback: (error: Error, result: NetworkFilter | null) => void): void
+    defineNetworkFilter(networkFilterXml: string, callback: (error: Error, result: NetworkFilter) => void): void
     /**
      * Define a new network filter, based on an XML description
      * @param {string} networkFilterXml an XML description of the nwfilter
-     * @returns {bluebird<NetworkFilter> | null} `NetworkFilter` object if successful, NULL in case of failure
+     * @returns {bluebird<NetworkFilter>} `NetworkFilter` object if successful, NULL in case of failure
      */
-    defineNetworkFilterAsync(networkFilterXml: string): bluebird<NetworkFilter> | null;
+    defineNetworkFilterAsync(networkFilterXml: string): bluebird<NetworkFilter>;
     /**
      * Define an inactive persistent storage pool or modify an existing persistent one from the XML description.
      * @param {string} storagePoolXml XML description for new pool
-     * @param {function(Error, StoragePool | null)} callback `StoragePool` object if successful, NULL in case of failure
+     * @param {function(Error, StoragePool)} callback `StoragePool` object if successful, NULL in case of failure
      */
-    defineStoragePool(storagePoolXml: string, callback: (error: Error, result: StoragePool | null) => void): void;
+    defineStoragePool(storagePoolXml: string, callback: (error: Error, result: StoragePool) => void): void;
     /**
      * Define an inactive persistent storage pool or modify an existing persistent one from the XML description.
      * @param {string} storagePoolXml XML description for new pool
-     * @returns {bluebird<StoragePool> | null} `StoragePool` object if successful, NULL in case of failure
+     * @returns {bluebird<StoragePool>} `StoragePool` object if successful, NULL in case of failure
      */
-    defineStoragePoolAsync(storagePoolXml: string): bluebird<StoragePool> | null;
+    defineStoragePoolAsync(storagePoolXml: string): bluebird<StoragePool>;
     disconnect(callback: (error: Error) => void): void;
     disconnectAsync(): bluebird<void>;
     /**
@@ -1008,10 +1008,10 @@ export declare interface Hypervisor {
      * CPU will not include features that block migration.
      * @param {Array<string>} cpuXmls array of XML descriptions of host CPUs
      * @param {Array<number>} [flags] flags from BaselineCPUFlags. The bitwise-OR will be done internally
-     * @param {function(Error, string | null)} callback XML description of the computed CPU or NULL on error.
+     * @param {function(Error, string)} callback XML description of the computed CPU or NULL on error.
      */
-    getBaselineCPU(cpuXmls: Array<string>, callback: (error: Error, result: string | null) => void): void;
-    getBaselineCPU(cpuXmls: Array<string>, flags: Array<number>, callback: (error: Error, result: string | null) => void): void;
+    getBaselineCPU(cpuXmls: Array<string>, callback: (error: Error, result: string) => void): void;
+    getBaselineCPU(cpuXmls: Array<string>, flags: Array<number>, callback: (error: Error, result: string) => void): void;
     /**
      * Computes the most feature-rich CPU which is compatible with all given host CPUs. 
      * If `flags` includes `VIR_CONNECT_BASELINE_CPU_EXPAND_FEATURES` then libvirt will explicitly list
@@ -1022,17 +1022,17 @@ export declare interface Hypervisor {
      * @param {Array<number>} [flags] flags from BaselineCPUFlags. The bitwise-OR will be done internally
      * @returns {bluebird<string>} XML description of the computed CPU (caller frees) or NULL on error.
      */
-    getBaselineCPUAsync(cpuXmls: Array<string>, flags?: Array<number>): bluebird<string> | null;
+    getBaselineCPUAsync(cpuXmls: Array<string>, flags?: Array<number>): bluebird<string>;
     /**
      * Provides capabilities of the hypervisor / driver.
      * @param {function(Error, string)} callback NULL in case of error, or an XML string defining the capabilities.
      */
-    getCapabilities(callback:(error: Error, result: string | null) => void): void;
+    getCapabilities(callback:(error: Error, result: string) => void): void;
     /**
      * Provides capabilities of the hypervisor / driver.
      * @returns {bluebird<string>} NULL in case of error, or an XML string defining the capabilities.
      */
-    getCapabilitiesAsync(): bluebird<string> | null;
+    getCapabilitiesAsync(): bluebird<string>;
     /**
      * Provides the version of libvirt used by the daemon running on the host
      * @param {function(Error, number)} callback libvirt library version used on the connection
@@ -1117,10 +1117,10 @@ export declare interface Hypervisor {
      * `Note:-` that this won't work for inactive domains which have an ID of -1, 
      * in that case a use `lookupDomainByName` or `lookupDomainByUUID` instead.
      * @param {number} id the domain ID number
-     * @returns {bluebird<Domain> | Error} a new domain object or NULL in case of failure. 
+     * @returns {bluebird<Domain>} a new domain object or NULL in case of failure. 
      * If the domain cannot be found, then `Libvirt.VIR_ERR_NO_DOMAIN` error is raised
      */
-    lookupDomainByIdAsync(id: number): bluebird<Domain> | Error;
+    lookupDomainByIdAsync(id: number): bluebird<Domain>;
     /**
      * Try to lookup a domain on the given hypervisor based on its name
      * @param {string} name name for the domain
@@ -1131,10 +1131,10 @@ export declare interface Hypervisor {
     /**
      * Try to lookup a domain on the given hypervisor based on its name
      * @param {string} name name for the domain
-     * @returns {bluebird<Domain> | Error} a new domain object or NULL in case of failure. 
+     * @returns {bluebird<Domain>} a new domain object or NULL in case of failure. 
      * If the domain cannot be found, then `Libvirt.VIR_ERR_NO_DOMAIN` error is raised.
      */
-    lookupDomainByNameAsync(name: string): bluebird<Domain> | Error;
+    lookupDomainByNameAsync(name: string): bluebird<Domain>;
     /**
      * Try to lookup a domain on the given hypervisor based on its UUID.
      * @param {string} uuid the raw UUID for the domain
@@ -1145,10 +1145,10 @@ export declare interface Hypervisor {
     /**
      * Try to lookup a domain on the given hypervisor based on its UUID.
      * @param {string} uuid the raw UUID for the domain
-     * @returns {bluebird<Domain> | Error} a new domain object or NULL in case of failure. 
+     * @returns {bluebird<Domain>} a new domain object or NULL in case of failure. 
      * If the domain cannot be found, then `Libvirt.VIR_ERR_NO_DOMAIN` error is raised.
      */
-    lookupDomainByUUIDAsync(uuid: string): bluebird<Domain> | Error;
+    lookupDomainByUUIDAsync(uuid: string): bluebird<Domain>;
     /**
      * Fetch a storage pool based on its unique name
      * @param {string} name name of pool to fetch
@@ -1180,7 +1180,7 @@ export declare interface Domain {
      * @param {Array<DomainDeviceModifyFlags>} [flags] Array of `DomainDeviceModifyFlags`. 
      * The bitwise-OR will be done internally 
      */
-    attachDeviceAsync(deviceXml: string, flags?: Array<DomainDeviceModifyFlags>): void | Error;
+    attachDeviceAsync(deviceXml: string, flags?: Array<DomainDeviceModifyFlags>): bluebird<void>;
     /**
      * Destroy the domain object. The running instance is shutdown if not down already and 
      * all resources used by it are given back to the hypervisor. If the domain is transient 
@@ -1193,7 +1193,7 @@ export declare interface Domain {
      * all resources used by it are given back to the hypervisor. If the domain is transient 
      * and has any snapshot metadata, then that metadata will automatically be deleted when the domain quits.
      */
-    destroyAsync(): void | Error;
+    destroyAsync(): bluebird<void>;
     /**
      * Extract information about a domain's block device.
      * @param {string} disk path to the block device(the <source file='...'/> sub-element, such as "/path/to/image"),
@@ -1238,9 +1238,9 @@ export declare interface Domain {
      * @param {DomainMetadataType} type type of metadata, from `DomainMetadataType`
      * @param {string} uri XML namespace identifier
      * @param {number} [flags] bitwise-OR of `DomainModificationImpact`
-     * @returns {bluebird<string> | Error} the metadata string on success
+     * @returns {bluebird<string>} the metadata string on success
      */
-    getMetadataAsync(type: DomainMetadataType, uri: string, flags?: number): bluebird<string> | Error;
+    getMetadataAsync(type: DomainMetadataType, uri: string, flags?: number): bluebird<string>;
     /**
      * Get the public name for that domain
      * @param {function(Error, string)} callback Name of the domain
@@ -1357,7 +1357,7 @@ export declare interface Domain {
      * @param {Array<DomainShutdownFlags> | number} [flags] a bitwise-OR of `DomainShutdownFlags` or Array of `DomainShutdownFlags`
      * @returns {bluebird<boolean>)} True in case of success, false otherwise
      */
-    shutdownAsync(flags:Array<DomainShutdownFlags> | number): bluebird<boolean>;
+    shutdownAsync(flags?:Array<DomainShutdownFlags> | number): bluebird<boolean>;
     /**
      * Launch a defined domain. If the call succeeds the domain moves from the defined to the running domains pools.
      * @param {Array<DomainCreateFlags> | number} [flags] a bitwise-OR of `DomainCreateFlags` or Array of `DomainCreateFlags`
@@ -1370,7 +1370,7 @@ export declare interface Domain {
      * @param {Array<DomainCreateFlags> | number} [flags] a bitwise-OR of `DomainCreateFlags` or Array of `DomainCreateFlags`
      * @returns {bluebird<boolean>)} True in case of success, false otherwise
      */
-    startAsync(flags: number | Array<DomainCreateFlags>): bluebird<boolean>;
+    startAsync(flags?: number | Array<DomainCreateFlags>): bluebird<boolean>;
      /**
      * Suspends an active domain, the process is frozen without further access to CPU resources and I/O but the memory used by
      * the domain at the hypervisor level will stay allocated. Use `resume` to reactivate the domain
@@ -1410,7 +1410,7 @@ export declare interface Domain {
      * @param {Array<DomainUndefineFlags> | number} [flags] a bitwise-OR of `DomainUndefineFlags` or Array of `DomainUndefineFlags`
      * @returns {bluebird<boolean>)} True in case of success, false otherwise
      */
-    undefineAsync(flags: number | Array<DomainUndefineFlags>): bluebird<boolean>;
+    undefineAsync(flags?: number | Array<DomainUndefineFlags>): bluebird<boolean>;
 }
 
 export declare interface Interface {
