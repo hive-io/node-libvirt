@@ -965,6 +965,18 @@ export declare interface Hypervisor {
      */
     defineNetworkFilterAsync(networkFilterXml: string): bluebird<NetworkFilter>;
     /**
+     * locates the specified secret and replaces all attributes of the secret specified by UUID by attributes specified in xml 
+     * @param {string} secretXml an xml describing the secret
+     * @param {function(Error, Secret)} callback `Secret` object if successful, NULL in case of failure
+     */
+    defineSecret(secretXml: string, callback: (error: Error, result: Secret) => void): void;
+    /**
+     * locates the specified secret and replaces all attributes of the secret specified by UUID by attributes specified in xml 
+     * @param {string} secretXml an xml describing the secret
+     * @returns {bluebird<Secret>} `Secret` object if successful, NULL in case of failure 
+     */
+    defineSecretAsync(secretXml: string): bluebird<Secret>;
+    /**
      * Define an inactive persistent storage pool or modify an existing persistent one from the XML description.
      * @param {string} storagePoolXml XML description for new pool
      * @param {function(Error, StoragePool)} callback `StoragePool` object if successful, NULL in case of failure
@@ -1143,12 +1155,38 @@ export declare interface Hypervisor {
      */
     lookupDomainByUUID(uuid: string, callback: (error: Error, result: Domain) => void): void;
     /**
-     * Try to lookup a domain on the given hypervisor based on its UUID.
+     * Try to lookup a domain based on its UUID.
      * @param {string} uuid the raw UUID for the domain
      * @returns {bluebird<Domain>} a new domain object or NULL in case of failure. 
      * If the domain cannot be found, then `Libvirt.VIR_ERR_NO_DOMAIN` error is raised.
      */
     lookupDomainByUUIDAsync(uuid: string): bluebird<Domain>;
+    /**
+     * Try to lookup a secret based on its usage The usageID is unique within the set of secrets sharing the same usageType value.
+     * @param {number} usageType the type of secret usage
+     * @param {string} usageId identifier of the object using the secret
+     * @param {function(Error, Secret)} callback `Secret` object if successful, NULL in case of failure
+     */
+    lookupSecretByUsage(usageType: number, usageId: string, callback: (error: Error, result: Secret) => void): void;
+    /**
+     * Try to lookup a secret based on its usage The usageID is unique within the set of secrets sharing the same usageType value.
+     * @param usageType the type of secret usage
+     * @param usageId identifier of the object using the secret
+     * @returns {bluebird<Secret>} `Secret` object if successful, NULL in case of failure
+     */
+    lookupSecretByUsageAsync(usageType: number, usageId: string): bluebird<Secret>;
+    /**
+     * Try to lookup a secret based on its UUID
+     * @param {string} uuidString the string UUID for the secret
+     * @param {function(Error, Secret)} callback callback `Secret` object if successful, NULL in case of failure
+     */
+    lookupSecretByUUID(uuidString: string, callback: (error: Error, result: Secret) => void): void;
+    /**
+     * Try to lookup a secret based on its UUID
+     * @param {string} uuidString the string UUID for the secret
+     * @returns {bluebird<Secret>} `Secret` object if successful, NULL in case of failure
+     */
+    lookupSecretByUUIDAsync(uuidString: string): bluebird<Secret>;
     /**
      * Fetch a storage pool based on its unique name
      * @param {string} name name of pool to fetch
@@ -1161,7 +1199,6 @@ export declare interface Hypervisor {
      * @returns {bluebird<StoragePool>} A storagepool object
      */
     lookupStoragePoolByNameAsync(name: string): bluebird<StoragePool>;
-
 }
 
 export declare interface Domain {
@@ -1615,4 +1652,79 @@ export declare interface StorageVolume {
      * @returns {bluebird<boolean>} True in case of success, false otherwise
      */
     wipeAsync(): bluebird<boolean>;
+}
+
+export declare interface Secret {
+    /**
+     * Deletes the specified secret
+     * @param {function(Error, number)} callback 0 in case of success, -1 otherwise
+     */
+    undefine(callback: (error: Error, result: number) => void): void;
+    /**
+     * Deletes the specified secret 
+     * @returns {bluebird<number>} 0 in case of success, -1 otherwise
+     */
+    undefineAsync(): bluebird<number>;
+    /**
+     * Get the UUID for a secret as string
+     * @param {function(Error, number)} callback uuid in case of success, NULL otherwise
+     */
+    getUUID(callback: (error: Error, uuid: string) => void): void;
+    /**
+     * Get the UUID for a secret as string
+     * @returns {bluebird<string>} uuid in case of success, NULL otherwise
+     */
+    getUUIDAsync(): bluebird<string>;
+    /**
+     * Fetches the value of a secret.
+     * @param {function(Error, string)} callback the secret value on success, NULL on failure
+     */
+    getValue(callback: (error: Error, result: string) => void): void;
+    /**
+     * Fetches the value of a secret.
+     * @returns {bluebird<string>} the secret value on success, NULL on failure
+     */
+    getValueAsync(): bluebird<string>;
+    /**
+     * Sets the value of a secret
+     * @param {string} value Value of the secret
+     * @param {function(Error, number)} callback 0 in case of success, -1 otherwise
+     */
+    setValue(value: string, callback: (error: Error, result: number) => void): void;
+    /**
+     * Sets the value of a secret
+     * @param value Value of the secret
+     * @returns {bluebird<number>} 0 in case of success, -1 otherwise
+     */
+    setValueAsync(value: string): bluebird<number>;
+    /**
+     * Get the unique identifier of the object with which this secret is to be used
+     * @param {function(Error, string)} callback a string identifying the object using the secret in case of success, NULL otherwise 
+     */
+    getUsageId(callback: (error: Error, result: string) => void): void;
+    /**
+     * Get the unique identifier of the object with which this secret is to be used
+     * @returns {bluebird<string>} a string identifying the object using the secret in case of success, NULL otherwise 
+     */
+    getUsageIdAsync(): bluebird<string>;
+    /**
+     * Get the type of object which uses this secret
+     * @param {function(Error, number)} callback a positive integer identifying the type of object, or -1 upon error
+     */
+    getUsageType(callback: (error: Error, result: number) => void): void;
+    /**
+     * Get the type of object which uses this secret
+     * @returns {bluebird<number>} a positive integer identifying the type of object, or -1 upon error
+     */
+    getUsageTypeAsync(): bluebird<number>;
+    /**
+     * Fetches an XML document describing attributes of the secret.
+     * @param {function(Error, string)} callback the XML document on success, NULL on failure
+     */
+    toXml(callback: (error: Error, result: string) => void): void;
+    /**
+     * Fetches an XML document describing attributes of the secret.
+     * @returns {bluebird<string>} the XML document on success, NULL on failure
+     */
+    toXmlAsync(): bluebird<string>;
 }
