@@ -1463,15 +1463,15 @@ export declare interface StoragePool {
      */
     getUUIDAsync(): bluebird<string>;
     /**
-     * Fetch the number of storage volumes within a pool
-     * @param {callback:(Error, number)} callback Number of the storage volumes in a pool
+     * Fetch the names of storage volumes within a pool
+     * @param {callback:(Error, Array<string>)} callback Number of the storage volumes in a pool
      */
-    getVolumes(callback:(error: Error, result: number) => void): void;
+    getVolumes(callback:(error: Error, result: Array<string>) => void): void;
     /**
-     * Fetch the number of storage volumes within a pool
-     * @returns {bluebird<number>} Number of the storage volumes in a pool
+     * Fetch the names of storage volumes within a pool
+     * @returns {bluebird<Array<string>>} Number of the storage volumes in a pool
      */
-    getVolumesAsync(): bluebird<number>;
+    getVolumesAsync(): bluebird<Array<string>>;
     /**
      * Determine if the storage pool is currently running
      * @param {callback:(Error, boolean)} callback Value indicating if storage pool is active
