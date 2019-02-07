@@ -1464,12 +1464,12 @@ export declare interface StoragePool {
     getUUIDAsync(): bluebird<string>;
     /**
      * Fetch the names of storage volumes within a pool
-     * @param {callback:(Error, Array<string>)} callback Number of the storage volumes in a pool
+     * @param {callback:(Error, Array<string>)} callback Names of the storage volumes in a pool
      */
     getVolumes(callback:(error: Error, result: Array<string>) => void): void;
     /**
      * Fetch the names of storage volumes within a pool
-     * @returns {bluebird<Array<string>>} Number of the storage volumes in a pool
+     * @returns {bluebird<Array<string>>} Names of the storage volumes in a pool
      */
     getVolumesAsync(): bluebird<Array<string>>;
     /**
