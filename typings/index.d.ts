@@ -273,14 +273,16 @@ export declare var Libvirt: {
     VIR_STORAGE_POOL_INACCESSIBLE: 4;
     VIR_STORAGE_VOL_FILE: 0;
     VIR_STORAGE_VOL_BLOCK: 1;
-    /**
-     * 
-     * @param {string} url usually with "qemu:///system"
-     */
-    createHypervisor(url: string): Hypervisor;
-    readonly path: string;
-    readonly libvirt_version: number;
+    
 }
+
+/**
+ * 
+ * @param {string} url usually with "qemu:///system"
+ */
+export function createHypervisor(url: string): Hypervisor;
+export const path: string;
+export const libvirt_version: number;
 
 export declare enum CompareCPUFlags {
     /**
