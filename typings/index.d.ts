@@ -8,7 +8,7 @@ export declare const VIR_CRED_ECHOPROMPT = 6;
 export declare const VIR_CRED_NOECHOPROMPT = 7;
 export declare const VIR_CRED_REALM = 8;
 export declare const VIR_CRED_EXTERNAL = 9;
-export declare const VIR_CPU_COMPARE_ERROR= -1;
+export declare const VIR_CPU_COMPARE_ERROR = -1;
 export declare const VIR_CPU_COMPARE_INCOMPATIBLE = 0;
 export declare const VIR_CPU_COMPARE_IDENTICAL = 1;
 export declare const VIR_CPU_COMPARE_SUPERSET = 2;
@@ -377,7 +377,7 @@ export declare const libvirt_version: number;
 //      * Create the pool and perform pool build using the VIR_STORAGE_POOL_BUILD_NO_OVERWRITE flag. This is mutually exclusive to VIR_STORAGE_POOL_CREATE_WITH_BUILD_OVERWRITE
 //      */
 //     VIR_STORAGE_POOL_CREATE_WITH_BUILD_OVERWRITE = 2,
-    
+
 //     VIR_STORAGE_POOL_CREATE_WITH_BUILD_NO_OVERWRITE	= 4
 // }
 
@@ -888,8 +888,8 @@ export declare interface Hypervisor {
      * this function will return VIR_CPU_COMPARE_ERROR (instead of VIR_CPU_COMPARE_INCOMPATIBLE) 
      * and the error will use the VIR_ERR_CPU_INCOMPATIBLE code with a message providing more details about the incompatibility. 
      */
-    compareCPU(domainCpuXml: string, callback:(error: Error, result: number) => void): void
-    compareCPU(domainCpuXml: string, flags: number, callback:(error: Error, result: number) => void): void
+    compareCPU(domainCpuXml: string, callback: (error: Error, result: number) => void): void
+    compareCPU(domainCpuXml: string, flags: number, callback: (error: Error, result: number) => void): void
     /**
      * Compares the given CPU description with the host CPU.
      * @param {string} domainCpuXml XML describing the CPU to compare with host CPU
@@ -900,7 +900,7 @@ export declare interface Hypervisor {
      * and the error will use the VIR_ERR_CPU_INCOMPATIBLE code with a message providing more details about the incompatibility.
      */
     compareCPUAsync(domainCpuXml: string): bluebird<number>;
-    connect(callback:(err: Error) => void): void;
+    connect(callback: (err: Error) => void): void;
     connectAsync(): bluebird<void>;
     /**
      * Launch a new guest domain, based on an XML description. The domain is not persistent, so its definition will disappear when it is destroyed,
@@ -909,8 +909,8 @@ export declare interface Hypervisor {
      * @param {number | Array<DomainCreateFlags>} [flags] bitwise-OR of supported `DomainCreateFlags` or Array of `DomainCreateFlags`
      * @param {function(Error, Domain)} callback a new `Domain` object or NULL in case of failure 
      */
-    createDomain(domainXml: string, callback:(error: Error, result: Domain) => void): void
-    createDomain(domainXml: string, flags: number | Array<number>, callback:(error: Error, result: Domain) => void): void
+    createDomain(domainXml: string, callback: (error: Error, result: Domain) => void): void
+    createDomain(domainXml: string, flags: number | Array<number>, callback: (error: Error, result: Domain) => void): void
     /**
      * Launch a new guest domain, based on an XML description. The domain is not persistent, so its definition will disappear when it is destroyed,
      * or if the host is restarted (use `defineDomainAsync`} to define persistent domains).
@@ -924,7 +924,7 @@ export declare interface Hypervisor {
      * @param {string} networkXml an XML description of the network
      * @param {function(Error, Network)} callback a new `Network` object or NULL in case of failure
      */
-    createNetwork(networkXml: string,callback: (error: Error, result: Network) => void): void
+    createNetwork(networkXml: string, callback: (error: Error, result: Network) => void): void
     /**
      * Create and start a new virtual network, based on an XML description
      * @param {string} networkXml an XML description of the network
@@ -974,13 +974,13 @@ export declare interface Hypervisor {
      * @param {string} interfaceXml the XML description for the interface, preferably in UTF-8
      * @param {function(Error, Interface)} callback `Interface` object if successful, NULL in case of failure
      */
-    defineInterface(interfaceXml: string, callback: (error:Error, result: Interface) => void): void
+    defineInterface(interfaceXml: string, callback: (error: Error, result: Interface) => void): void
     /**
      * Define an inactive persistent physical host interface or modify an existing persistent one from the XML description.
      * @param {string} interfaceXml the XML description for the interface, preferably in UTF-8
      * @returns {bluebird<Interface>} `Interface` object if successful, NULL in case of failure
      */
-    defineInterfaceAsync(interfaceXml: string): bluebird<Interface> ;
+    defineInterfaceAsync(interfaceXml: string): bluebird<Interface>;
     /**
      * Define an inactive persistent virtual network or modify an existing persistent one from the XML description.
      * @param {string} networkXml the XML description for the network, preferably in UTF-8
@@ -1041,8 +1041,8 @@ export declare interface Hypervisor {
      * @param {number} [flags] extra flags; binary-OR of `GetAllDomainStatsFlags`
      * @param {function(Error, {string: {string: number}})} callback Object with domain name followed by its param and value as sub key-value pair 
      */
-    getAllDomainStats(stats: number, callback: (error: Error, result: ({[domainName: string] : {[x:string]: number}})) => void): void;
-    getAllDomainStats(stats: number, flags: number, callback: (error: Error, result: ({[domainName: string] : {[x:string]: number}})) => void): void;
+    getAllDomainStats(stats: number, callback: (error: Error, result: ({ [domainName: string]: { [x: string]: number } })) => void): void;
+    getAllDomainStats(stats: number, flags: number, callback: (error: Error, result: ({ [domainName: string]: { [x: string]: number } })) => void): void;
     /**
      * Query statistics for all domains on a given connection. Report statistics of various parameters for a running 
      * VM according to `stats` field. The statistics are returned as an array of structures for each queried domain. 
@@ -1052,7 +1052,7 @@ export declare interface Hypervisor {
      * @param {number} stats stats to return, binary-OR of `DomainStatsTypes`
      * @param {number} [flags] extra flags; binary-OR of `GetAllDomainStatsFlags`
      */
-    getAllDomainStatsAsync(stats: number, flags?: number): bluebird<{[domainName: string] : {[x:string]: number}}>
+    getAllDomainStatsAsync(stats: number, flags?: number): bluebird<{ [domainName: string]: { [x: string]: number } }>
     /**
      * Computes the most feature-rich CPU which is compatible with all given host CPUs. 
      * If `flags` includes `VIR_CONNECT_BASELINE_CPU_EXPAND_FEATURES` then libvirt will explicitly list
@@ -1080,7 +1080,7 @@ export declare interface Hypervisor {
      * Provides capabilities of the hypervisor / driver.
      * @param {function(Error, string)} callback NULL in case of error, or an XML string defining the capabilities.
      */
-    getCapabilities(callback:(error: Error, result: string) => void): void;
+    getCapabilities(callback: (error: Error, result: string) => void): void;
     /**
      * Provides capabilities of the hypervisor / driver.
      * @returns {bluebird<string>} NULL in case of error, or an XML string defining the capabilities.
@@ -1090,7 +1090,7 @@ export declare interface Hypervisor {
      * Provides the version of libvirt used by the daemon running on the host
      * @param {function(Error, number)} callback libvirt library version used on the connection
      */
-    getLibVirtVersion(callback:(error: Error, result: number) => void): void;
+    getLibVirtVersion(callback: (error: Error, result: number) => void): void;
     /**
      * Provides the version of libvirt used by the daemon running on the host
      * @returns {bluebird<number>}libvirt library version used on the connection
@@ -1233,7 +1233,7 @@ export declare interface Hypervisor {
      * @param {string} name name of pool to fetch
      * @param {function(Error, StoragePool)} callback A storagepool object
      */
-    lookupStoragePoolByName(name: string, callback:(error: Error, result: StoragePool) => void): void;
+    lookupStoragePoolByName(name: string, callback: (error: Error, result: StoragePool) => void): void;
     /**
      * Fetch a storage pool based on its unique name
      * @param {string} name name of pool to fetch
@@ -1250,8 +1250,8 @@ export declare interface Domain {
      * The bitwise-OR will be done internally 
      * @param {function(Error, void)} callback After attaching a device
      */
-    attachDevice(deviceXml: string, callback:(error: Error, result: void)=> void): void;
-    attachDevice(deviceXml: string, flags: Array<number>, callback:(error: Error, result: void)=> void): void;
+    attachDevice(deviceXml: string, callback: (error: Error, result: void) => void): void;
+    attachDevice(deviceXml: string, flags: Array<number>, callback: (error: Error, result: void) => void): void;
     /**
      * Create a virtual device attachment to backend. 
      * @param {string} deviceXml pointer to XML description of one device
@@ -1259,6 +1259,20 @@ export declare interface Domain {
      * The bitwise-OR will be done internally 
      */
     attachDeviceAsync(deviceXml: string, flags?: Array<number>): bluebird<void>;
+    /**
+     * Delete the snapshot.
+     * @param {string} name name of the snapshot
+     * @param {number | Array<number>} flags bitwise OR or array of DomainSnapshotDeleteFlags 
+     * @param {function(Error, void)} callback returns error incase of failure, nothing otherwise
+     */
+    deleteSnapshot(name: string, callback:(error: Error, result: void) => void): void;
+    deleteSnapshot(name: string, flags: number | Array<number>, callback:(error: Error, result: void) => void): void;
+    /**
+     * Delete the snapshot.
+     * @param {string} name name of the snapshot
+     * @param {number | Array<number>} flags bitwise OR or array of DomainSnapshotDeleteFlags
+     */
+    deleteSnapshotAsync(name: string, flags?: number | Array<number>): bluebird<void>;
     /**
      * Destroy the domain object. The running instance is shutdown if not down already and 
      * all resources used by it are given back to the hypervisor. If the domain is transient 
@@ -1278,32 +1292,36 @@ export declare interface Domain {
      * or device shorthand(the <target dev='...'/> sub-element, such as "vda")
      * @param {function(error, {capacity: number, allocation: number, physical: number})} callback Object containing information about disk 
      */
-    getBlockInfo(disk: string, callback:(error: Error, result: {capacity: number, allocation: number, physical: number}) => void): void;
+    getBlockInfo(disk: string, callback: (error: Error, result: { capacity: number, allocation: number, physical: number }) => void): void;
     /**
      * Extract information about a domain's block device.
      * @param {string} disk path to the block device(the <source file='...'/> sub-element, such as "/path/to/image"),
      * or device shorthand(the <target dev='...'/> sub-element, such as "vda")
      * @returns {bluebird<{capacity: number, allocation: number, physical: number}>} Object containing information about disk
      */
-    getBlockInfoAsync(disk: string): bluebird<{capacity: number, allocation: number, physical: number}>
+    getBlockInfoAsync(disk: string): bluebird<{ capacity: number, allocation: number, physical: number }>
     /**
      * Extract information about a domain.
      * @param {function(Error, DomainInfo)} callback Object containing domain information
      */
-    getInfo(callback:(error: Error, result: {state: string,
+    getInfo(callback: (error: Error, result: {
+        state: string,
         maxMemory: number,
         memory: number,
         vcpus: number,
-        cpuTime: number}) => void): void;
+        cpuTime: number
+    }) => void): void;
     /**
      * Extract information about a domain.
      * @returns {bluebird<{DomainInfo}>} Object containing domain information
      */
-    getInfoAsync(): bluebird<{state: string,
+    getInfoAsync(): bluebird<{
+        state: string,
         maxMemory: number,
         memory: number,
         vcpus: number,
-        cpuTime: number}>;
+        cpuTime: number
+    }>;
     /**
      * Retrieves the appropriate domain element given by `DomainMetadataType`. 
      * If VIR_DOMAIN_METADATA_ELEMENT is requested parameter `uri` must be set to the name of the namespace
@@ -1314,8 +1332,8 @@ export declare interface Domain {
      * @param {number} [flags] bitwise-OR of `DomainModificationImpact`
      * @param {function(Error, string)} callback the metadata string on success
      */
-    getMetadata(type: number, uri: string, callback:(error: Error, result: string) => void): void;
-    getMetadata(type: number, uri: string, flags: number, callback:(error: Error, result: string) => void): void;
+    getMetadata(type: number, uri: string, callback: (error: Error, result: string) => void): void;
+    getMetadata(type: number, uri: string, flags: number, callback: (error: Error, result: string) => void): void;
     /**
      * Retrieves the appropriate domain element given by `DomainMetadataType`. 
      * If VIR_DOMAIN_METADATA_ELEMENT is requested parameter `uri` must be set to the name of the namespace
@@ -1331,17 +1349,47 @@ export declare interface Domain {
      * Get the public name for that domain
      * @param {function(Error, string)} callback Name of the domain
      */
-    getName(callback:(error: Error, result: string) => void): void;
+    getName(callback: (error: Error, result: string) => void): void;
     /**
      * Get the public name for that domain
      * @returns {bluebird<string>} Name of the domain
      */
     getNameAsync(): bluebird<string>;
     /**
+     * Provide an XML description of the domain snapshot
+     * @param {function(Error, string)} callback Xml description of the snapshot, NULL other wise.
+     */
+    getCurrentSnapshot(callback: (error: Error, xml: string) => void): void;
+    /**
+     * Provide an XML description of the domain snapshot
+     * @returns {bluebird<string>} Xml description of the snapshot.
+     */
+    getCurrentSnapshotAsync(): bluebird<string>;
+    /**
+     * Provides array of string with snapshot description
+     * @param {function(Error, Array<string>)} callback returns array of string
+     */
+    getSnapshots(callback: (error: Error, result: Array<string>) => void): void;
+    /**
+     * Provides array of string with snapshot description
+     * @returns {Array<string>} array of string
+     */
+    getSnapshotsAsync(): bluebird<string>;
+    /**
+     * Determine if the domain has a current snapshot.
+     * @param {function(Error, boolean)} callback Boolean value indicating snapshot is present or not
+     */
+    hasCurrentSnapshot(callback: (error: Error, result: boolean) => void): void;
+    /**
+     * Determine if the domain has a current snapshot.
+     * @return {bluebird<boolean>} callback Boolean value indicating snapshot is present or not
+     */
+    hasCurrentSnapshotAsync(): bluebird<boolean>;
+    /**
      * Determine if the domain is currently running
      * @param {function(Error, boolean)} callback Boolean value indicating domain is running or not
      */
-    isActive(callback:(error: Error, result: boolean) => void): void;
+    isActive(callback: (error: Error, result: boolean) => void): void;
     /**
      * Determine if the domain is currently running
      * @returns {<bluebird<boolean>} Boolean value indicating domain is running or not
@@ -1351,24 +1399,34 @@ export declare interface Domain {
      * Determine if the domain has a persistent configuration which means it will still exist after shutting down
      * @param {function(boolean)} callback Boolean value indicating domain is persistent or not
      */
-    isPersistent(callback:(error: Error, result: boolean) => void): void;
+    isPersistent(callback: (error: Error, result: boolean) => void): void;
     /**
      * Determine if the domain has a persistent configuration which means it will still exist after shutting down
      * @returns {bluebird<boolean>} Boolean value indicating domain is persistent or not
      */
     isPersistentAsync(): bluebird<boolean>;
     /**
+     * Provide an XML description of the domain snapshot
+     * @param {function(Error, string)} callback Xml description of the snapshot, NULL other wise.
+     */
+    lookupSnapshotByName(callback: (error: Error, xml: string) => void): void;
+    /**
+     * Provide an XML description of the domain snapshot
+     * @returns {bluebird<string>} Xml description of the snapshot.
+     */
+    lookupSnapshotByNameAsync(): bluebird<string>;
+    /**
      * Migrate the domain object from its current host to the destination host given by dconn (a connection to the destination host)
      * @param {MigrateInfo} migrateInfo 
      * @param {function(Error, Domain)} callback Migrated domain or null in case of error
      */
-    migrate(migrateInfo: {dest_uri?: string, dest_name?: string, bandwidth?: number, flags: Array<number> | number}, callback: (error:Error, result: Domain) => void): void;
+    migrate(migrateInfo: { dest_uri?: string, dest_name?: string, bandwidth?: number, flags: Array<number> | number }, callback: (error: Error, result: Domain) => void): void;
     /**
      * Migrate the domain object from its current host to the destination host given by dconn (a connection to the destination host)
      * @param {MigrateInfo} migrateInfo 
      * @returns {Domain} Migrated domain or null in case of error
      */
-    migrateAsync(migrateInfo: {dest_uri?: string, dest_name?: string, bandwidth?: number, flags: Array<number> | number}): bluebird<Domain>;
+    migrateAsync(migrateInfo: { dest_uri?: string, dest_name?: string, bandwidth?: number, flags: Array<number> | number }): bluebird<Domain>;
     /**
      * Reboot a domain, the domain object is still usable thereafter, but the domain OS is being stopped
      * for a restart. `Note` that the guest OS may ignore the request. Additionally, the hypervisor may check
@@ -1376,8 +1434,8 @@ export declare interface Domain {
      * @param {number | Array<DomainRebootFlags>} [flags] a bitwise-OR of `DomainRebootFlags` or Array of `DomainRebootFlags`
      * @param {function(Error, result)} callback Returns true in case of success, false otherwise 
      */
-    reboot(callback:(error: Error, result: boolean) => void): void;
-    reboot(callback:(error: Error, flags: number | Array<number>, result: boolean) => void): void;
+    reboot(callback: (error: Error, result: boolean) => void): void;
+    reboot(callback: (error: Error, flags: number | Array<number>, result: boolean) => void): void;
     /**
      * Reboot a domain, the domain object is still usable thereafter, but the domain OS is being stopped
      * for a restart. `Note` that the guest OS may ignore the request. Additionally, the hypervisor may check
@@ -1391,7 +1449,7 @@ export declare interface Domain {
      * where all hardware sees the RST line set and reinitializes internal state.
      * @param {function(Error, boolean)} callback true in case of success, false otherwise
      */
-    reset(callback:(error:Error, result: boolean) => void): void;
+    reset(callback: (error: Error, result: boolean) => void): void;
     /**
      * Reset a domain immediately without any guest OS shutdown. Reset emulates the power reset button on a machine,
      * where all hardware sees the RST line set and reinitializes internal state.
@@ -1403,13 +1461,25 @@ export declare interface Domain {
      * Moreover, resume may not be supported if domain is in some special state like `VIR_DOMAIN_PMSUSPENDED`.
      * @param {function(Error, boolean)} callback true in case of success, false otherwise 
      */
-    resume(callback:(error: Error, result: boolean) => void):void;
+    resume(callback: (error: Error, result: boolean) => void): void;
     /**
      * Resume a suspended domain, the process is restarted from the state where it was frozen by calling `suspendAsync`.
      * Moreover, resume may not be supported if domain is in some special state like `VIR_DOMAIN_PMSUSPENDED`.
      * @returns {bluebird<boolean>} true in case of success, false otherwise 
      */
-    resumeAsync():bluebird<boolean>;
+    resumeAsync(): bluebird<boolean>;
+    /**
+     * Revert the domain to a given snapshot.
+     * @param {string} snapshotName name of the snapshot to revert to;
+     * @param {function(error, void)} callback error incase of failure, nothing otherwise
+     */
+    revertToSnapshot(snapshotName: string, callback: (error: Error, result: void) => void): void;
+    /**
+     * Revert the domain to a given snapshot.
+     * @param {string} snapshotName name of the snapshot to revert to;
+     * @returns {bluebird<void>} nothing
+     */
+    revertToSnapshotAsync(snapshotName: string): bluebird<void>;
     /**
      * Sets the appropriate domain element given by `type` to the value of `metadata`. no newlines are permitted, and should be short
      * @param {number} type type of metadata, from `DomainMetadataType`
@@ -1419,8 +1489,8 @@ export declare interface Domain {
      * @param {number} [flags] bitwise-OR of `DomainModificationImpact`
      * @param {function(Error, boolean)} callback True in case of success, false otherwise
      */
-    setMetadata(type: number, metadata: string, key: string, uri: string, callback:(error: Error, result: boolean) => void): void;
-    setMetadata(type: number, metadata: string, key: string, uri: string, flags: number, callback:(error: Error, result: boolean) => void): void;
+    setMetadata(type: number, metadata: string, key: string, uri: string, callback: (error: Error, result: boolean) => void): void;
+    setMetadata(type: number, metadata: string, key: string, uri: string, flags: number, callback: (error: Error, result: boolean) => void): void;
     /**
      * Sets the appropriate domain element given by `type` to the value of `metadata`. no newlines are permitted, and should be short
      * @param {number} type type of metadata, from `DomainMetadataType`
@@ -1436,48 +1506,63 @@ export declare interface Domain {
      * @param {Array<DomainShutdownFlags> | number} [flags] a bitwise-OR of `DomainShutdownFlags` or Array of `DomainShutdownFlags`
      * @param {function(Error, boolean)} callback True in case of success, false otherwise
      */
-    shutdown(callback:(error: Error, result: boolean) => void): void;
-    shutdown(flags:Array<number> | number, callback:(error: Error, result: boolean) => void): void;
+    shutdown(callback: (error: Error, result: boolean) => void): void;
+    shutdown(flags: Array<number> | number, callback: (error: Error, result: boolean) => void): void;
     /**
      * Shutdown a domain, the domain object is still usable thereafter but the domain OS is being stopped.
      * @param {Array<DomainShutdownFlags> | number} [flags] a bitwise-OR of `DomainShutdownFlags` or Array of `DomainShutdownFlags`
      * @returns {bluebird<boolean>)} True in case of success, false otherwise
      */
-    shutdownAsync(flags?:Array<number> | number): bluebird<boolean>;
+    shutdownAsync(flags?: Array<number> | number): bluebird<boolean>;
     /**
      * Launch a defined domain. If the call succeeds the domain moves from the defined to the running domains pools.
      * @param {Array<DomainCreateFlags> | number} [flags] a bitwise-OR of `DomainCreateFlags` or Array of `DomainCreateFlags`
      * @param {function(Error, boolean)} callback  True in case of success, false otherwise
      */
-    start(callback:(error: Error, result: boolean) => void): void;
-    start(flags: number | Array<number>, callback:(error: Error, result: boolean) => void): void;
+    start(callback: (error: Error, result: boolean) => void): void;
+    start(flags: number | Array<number>, callback: (error: Error, result: boolean) => void): void;
     /**
      * Launch a defined domain. If the call succeeds the domain moves from the defined to the running domains pools.
      * @param {Array<DomainCreateFlags> | number} [flags] a bitwise-OR of `DomainCreateFlags` or Array of `DomainCreateFlags`
      * @returns {bluebird<boolean>)} True in case of success, false otherwise
      */
     startAsync(flags?: number | Array<number>): bluebird<boolean>;
-     /**
-     * Suspends an active domain, the process is frozen without further access to CPU resources and I/O but the memory used by
-     * the domain at the hypervisor level will stay allocated. Use `resume` to reactivate the domain
-     * Moreover, suspend may not be supported if domain is in some special state like `VIR_DOMAIN_PMSUSPENDED`.
-     * @param {function(Error, boolean)} callback true in case of success, false otherwise 
-     */
-    resume(callback:(error: Error, result: boolean) => void):void;
+    /**
+    * Suspends an active domain, the process is frozen without further access to CPU resources and I/O but the memory used by
+    * the domain at the hypervisor level will stay allocated. Use `resume` to reactivate the domain
+    * Moreover, suspend may not be supported if domain is in some special state like `VIR_DOMAIN_PMSUSPENDED`.
+    * @param {function(Error, boolean)} callback true in case of success, false otherwise 
+    */
+    resume(callback: (error: Error, result: boolean) => void): void;
     /**
      * Suspends an active domain, the process is frozen without further access to CPU resources and I/O but the memory used by
      * the domain at the hypervisor level will stay allocated. Use `resumeAsync` to reactivate the domain
      * Moreover, suspend may not be supported if domain is in some special state like `VIR_DOMAIN_PMSUSPENDED`.
      * @returns {bluebird<boolean>} true in case of success, false otherwise 
      */
-    resumeAsync():bluebird<boolean>;
+    resumeAsync(): bluebird<boolean>;
+    /**
+     * Creates a new snapshot of a domain based on the snapshot xml contained in xmlDesc.
+     * @param {string} xml string containing an XML description of the domain
+     * @param {Array<number>} flags bitwise-OR of virDomainSnapshotCreateFlags
+     * @param {function(Error, void)} callback null incase of Error, nothing otherwise
+     */
+    takeSnapshot(xml: string, callback: (error: Error, result: void) => void): void;
+    takeSnapshot(xml: string, flags: Array<number>, callback: (error: Error, result: void) => void): void;
+    /**
+     * Creates a new snapshot of a domain based on the snapshot xml contained in xmlDesc.
+     * @param xml string containing an XML description of the domain
+     * @param flags bitwise-OR of virDomainSnapshotCreateFlags
+     * @returns {bluebird<boolean>} true in case of success, false otherwise 
+     */
+    takeSnapshotAsync(xml: string, flags?: Array<number>): bluebird<void>;
     /**
      * Provide an XML description of the domain
      * @param {number} [flags] bitwise-OR of `DomainXMLFlags`
      * @param {function(Error, string)} callback XML reprentation of the domain
      */
-    toXml(callback:(error: Error, result: string) => void): void;
-    toXml(flags: number, callback:(error: Error, result: string) => void): void;
+    toXml(callback: (error: Error, result: string) => void): void;
+    toXml(flags: number, callback: (error: Error, result: string) => void): void;
     /**
      * Provide an XML description of the domain
      * @param {number} [flags] bitwise-OR of `DomainXMLFlags`
@@ -1489,8 +1574,8 @@ export declare interface Domain {
      * @param {Array<DomainUndefineFlags> | number} [flags] a bitwise-OR of `DomainUndefineFlags` or Array of `DomainUndefineFlags`
      * @param {function(Error, boolean)} callback  True in case of success, false otherwise
      */
-    undefine(callback:(error: Error, result: boolean) => void): void;
-    undefine(flags: number | Array<null>, callback:(error: Error, result: boolean) => void): void;
+    undefine(callback: (error: Error, result: boolean) => void): void;
+    undefine(flags: number | Array<null>, callback: (error: Error, result: boolean) => void): void;
     /**
      * Undefine a domain. If the domain is running, it's converted to transient domain, without stopping it. If the domain is inactive, the domain configuration is removed.
      * @param {Array<DomainUndefineFlags> | number} [flags] a bitwise-OR of `DomainUndefineFlags` or Array of `DomainUndefineFlags`
@@ -1520,29 +1605,29 @@ export declare interface StoragePool {
      * Delete the underlying pool resources. This is a non-recoverable operation.
      * @param {Array<StoragePoolDeleteFlags>} flags Array of `StoragePoolDeleteFlags`
      * @param {function(Error, boolean)} callback retuns True in case of success, false otherwise.
-     */    
+     */
     erase(flags: Array<number>, callback: (error: Error, result: boolean) => void): void;
     /**
      * Delete the underlying pool resources. This is a non-recoverable operation.
      * @param {Array<StoragePoolDeleteFlags>} flags Array of `StoragePoolDeleteFlags`
      * @returns {bluebird<boolean>} retuns True in case of success, false otherwise.
-     */    
+     */
     eraseAsync(flags: Array<number>): bluebird<boolean>;
     /**
      * Get volatile information about the storage pool such as free space / usage summary
      * @param {function(Error, StoragePoolInfo)} callback Object of instance `StoragePoolInfo`
      */
-    getInfo(callback:(error: Error, result: {state: string, capacity: number, allocation: number, available: number}) => void): void;
+    getInfo(callback: (error: Error, result: { state: string, capacity: number, allocation: number, available: number }) => void): void;
     /**
      * Get volatile information about the storage pool such as free space / usage summary
      * @returns {bluebird<StoragePoolInfo>} Object of instance `StoragePoolInfo`
      */
-    getInfoAsync(): bluebird<{state: string, capacity: number, allocation: number, available: number}>
+    getInfoAsync(): bluebird<{ state: string, capacity: number, allocation: number, available: number }>
     /**
      * Fetch the globally unique ID of the storage pool as a string
      * @param {function(Error, string)} callback UUID of the storage pool
      */
-    getUUID(callback:(error: Error, uuid: string) => void):void;
+    getUUID(callback: (error: Error, uuid: string) => void): void;
     /**
      * Fetch the globally unique ID of the storage pool as a string
      * @returns {bluebird<string>} UUID of the storage pool
@@ -1552,7 +1637,7 @@ export declare interface StoragePool {
      * Fetch the names of storage volumes within a pool
      * @param {callback:(Error, Array<string>)} callback Names of the storage volumes in a pool
      */
-    getVolumes(callback:(error: Error, result: Array<string>) => void): void;
+    getVolumes(callback: (error: Error, result: Array<string>) => void): void;
     /**
      * Fetch the names of storage volumes within a pool
      * @returns {bluebird<Array<string>>} Names of the storage volumes in a pool
@@ -1562,7 +1647,7 @@ export declare interface StoragePool {
      * Determine if the storage pool is currently running
      * @param {callback:(Error, boolean)} callback Value indicating if storage pool is active
      */
-    isActive(callback:(error: Error, result: boolean) => void): void;
+    isActive(callback: (error: Error, result: boolean) => void): void;
     /**
      * Determine if the storage pool is currently running
      * @returns {bluebird<boolean>} Value indicating if storage pool is active
@@ -1585,7 +1670,7 @@ export declare interface StoragePool {
      * and/or initializing new devices at the OS layer
      * @param {callback:(Error, boolean)} callback True in case of success, false otherwise
      */
-    refresh(callback:(error:Error, result: boolean) => void): void;
+    refresh(callback: (error: Error, result: boolean) => void): void;
     /**
      * Request that the pool refresh its list of volumes. This may involve communicating with a remote server,
      * and/or initializing new devices at the OS layer
@@ -1635,17 +1720,17 @@ export declare interface StorageVolume {
      * Fetches volatile information about the storage volume such as its current allocation.
      * @param {function(Error, StorageVolInfo)} callback returns Info about a storage volume
      */
-    getInfo(callback:(error: Error, result: {type: number, capacity: number, allocation: number}) => void): void;
+    getInfo(callback: (error: Error, result: { type: number, capacity: number, allocation: number }) => void): void;
     /**
      * Fetches volatile information about the storage volume such as its current allocation.
      * @returns {bluebird<StorageVolInfo>)} returns Info about a storage volume
      */
-    getInfoAsync(): bluebird<{type: number, capacity: number, allocation: number}>;
+    getInfoAsync(): bluebird<{ type: number, capacity: number, allocation: number }>;
     /**
      * Fetch the storage volume key. This is globally unique, so the same volume will have the same key no matter what host it is accessed from
      * @param {function(Error, string)} callback returns the volume key, or NULL on error
      */
-    getKey(callback:(error: Error, result: string) => void): void;
+    getKey(callback: (error: Error, result: string) => void): void;
     /**
      * Fetch the storage volume key. This is globally unique, so the same volume will have the same key no matter what host it is accessed from
      * @returns {bluebird<string>} returns the volume key, or NULL on error
@@ -1655,7 +1740,7 @@ export declare interface StorageVolume {
      * Fetch the storage volume name. This is unique within the scope of a pool
      * @param {function(Error, string)} callback the volume name, or NULL on error
      */
-    getName(callback:(error: Error, result: string) => void): void;
+    getName(callback: (error: Error, result: string) => void): void;
     /**
      * Fetch the storage volume name. This is unique within the scope of a pool
      * @returns {bluebird<string>} returns the volume name, or NULL on error
@@ -1665,7 +1750,7 @@ export declare interface StorageVolume {
      * Fetch the storage volume path. Depending on the pool configuration this is either persistent across hosts, or dynamically assigned at pool startup.
      * @param {function(Error, string)} callback the storage volume path, or NULL on error.
      */
-    getPath(callback:(error: Error, result: string) => void): void;
+    getPath(callback: (error: Error, result: string) => void): void;
     /**
      * Fetch the storage volume name. This is unique within the scope of a pool
      * @returns {bluebird<string>} returns the storage volume path, or NULL on error.
@@ -1675,7 +1760,7 @@ export declare interface StorageVolume {
      * Delete the storage volume from the pool
      * @param {function(Error, boolean)} callback True in case of success, false otherwise
      */
-    remove(callback:(error: Error, result: boolean) => void): void;
+    remove(callback: (error: Error, result: boolean) => void): void;
     /**
      * Delete the storage volume from the pool
      * @returns {bluebird<boolean>} True in case of success, false otherwise
@@ -1695,7 +1780,7 @@ export declare interface StorageVolume {
      * Ensure data previously on a volume is not accessible to future reads.
      * @param {function(Error, boolean)} callback True in case of success, false otherwise
      */
-    wipe(callback:(error: Error, result: boolean) => void): void;
+    wipe(callback: (error: Error, result: boolean) => void): void;
     /**
      * Ensure data previously on a volume is not accessible to future reads.
      * @returns {bluebird<boolean>} True in case of success, false otherwise
