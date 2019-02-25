@@ -1407,14 +1407,16 @@ export declare interface Domain {
     isPersistentAsync(): bluebird<boolean>;
     /**
      * Provide an XML description of the domain snapshot
+     * @param {string} snapshotName name of the snapshot
      * @param {function(Error, string)} callback Xml description of the snapshot, NULL other wise.
      */
-    lookupSnapshotByName(callback: (error: Error, xml: string) => void): void;
+    lookupSnapshotByName(snapshotName: string, callback: (error: Error, xml: string) => void): void;
     /**
      * Provide an XML description of the domain snapshot
+     * @param {string} snapshotName name of the snapshot
      * @returns {bluebird<string>} Xml description of the snapshot.
      */
-    lookupSnapshotByNameAsync(): bluebird<string>;
+    lookupSnapshotByNameAsync(snapshotName: string): bluebird<string>;
     /**
      * Migrate the domain object from its current host to the destination host given by dconn (a connection to the destination host)
      * @param {MigrateInfo} migrateInfo 
