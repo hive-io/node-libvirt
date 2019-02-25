@@ -1374,7 +1374,7 @@ export declare interface Domain {
      * Provides array of string with snapshot description
      * @returns {Array<string>} array of string
      */
-    getSnapshotsAsync(): bluebird<string>;
+    getSnapshotsAsync(): bluebird<Array<string>>;
     /**
      * Determine if the domain has a current snapshot.
      * @param {function(Error, boolean)} callback Boolean value indicating snapshot is present or not
