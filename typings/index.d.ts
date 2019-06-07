@@ -867,13 +867,13 @@ export declare interface Domain {
      * @param {MigrateInfo} migrateInfo 
      * @param {function(Error, Domain)} callback Migrated domain or null in case of error
      */
-    migrate(migrateInfo: { dest_uri?: string, dest_name?: string, bandwidth?: number, flags: Array<number> | number }, callback: (error: Error, result: Domain) => void): void;
+    migrate(migrateInfo: { dest_uri?: string, dest_name?: string, bandwidth?: number, flags: Array<number> | number, migrate_uri?: string }, callback: (error: Error, result: Domain) => void): void;
     /**
      * Migrate the domain object from its current host to the destination host given by dconn (a connection to the destination host)
      * @param {MigrateInfo} migrateInfo 
      * @returns {Domain} Migrated domain or null in case of error
      */
-    migrateAsync(migrateInfo: { dest_uri?: string, dest_name?: string, bandwidth?: number, flags: Array<number> | number }): bluebird<Domain>;
+    migrateAsync(migrateInfo: { dest_uri?: string, dest_name?: string, bandwidth?: number, flags: Array<number> | number, migrate_uri?: string }): bluebird<Domain>;
     /**
      * Reboot a domain, the domain object is still usable thereafter, but the domain OS is being stopped
      * for a restart. `Note` that the guest OS may ignore the request. Additionally, the hypervisor may check

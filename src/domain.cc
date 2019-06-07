@@ -1545,6 +1545,7 @@ NAN_METHOD(Domain::Migrate)
 
   std::string dest_uri(*Nan::Utf8String(info_->Get(Nan::New("dest_uri").ToLocalChecked())));
   std::string dest_name(*Nan::Utf8String(info_->Get(Nan::New("dest_name").ToLocalChecked())));
+  std::string migration_uri(*Nan::Utf8String(info_->Get(Nan::New("migrate_uri").ToLocalChecked())));
 
   if (info_->Has(Nan::New("flags").ToLocalChecked())) {
     Local<Value> flagsValue = info_->Get(Nan::New("flags").ToLocalChecked());
@@ -1582,6 +1583,7 @@ NAN_METHOD(Domain::Migrate)
   worker->setBandwidth(bandwidth);
   worker->setFlags(flags);
   worker->setDestname(dest_name);
+  worker->setMigUri(migration_uri);
   Nan::AsyncQueueWorker(worker);
   return;
 }
@@ -1589,19 +1591,11 @@ NAN_METHOD(Domain::Migrate)
 NLV_WORKER_EXECUTE(Domain, Migrate)
 {
   NLV_WORKER_ASSERT_DOMAIN();
-  if(conn_) {
-    migrated_ = virDomainMigrate(Handle(), conn_, flags_, destname_.c_str(), uri_.c_str(), bandwidth_);
-    if(migrated_ == NULL) {
-      SET_ERROR_WITH_CONTEXT(virSaveLastError());
-      return;
-    }
-  } else {
-    int ret = -1;
-    ret = virDomainMigrateToURI(Handle(), uri_.c_str(), flags_, destname_.c_str(), bandwidth_);
-    if(ret == -1) {
-      SET_ERROR_WITH_CONTEXT(virSaveLastError());
-      return;
-    }
+  int ret = -1;
+  ret = virDomainMigrateToURI2(Handle(), uri_.c_str(), migration_uri_.c_str(), NULL, flags_, destname_.c_str(), bandwidth_);
+  if(ret == -1) {
+    SET_ERROR_WITH_CONTEXT(virSaveLastError());
+    return;
   }
 }
 

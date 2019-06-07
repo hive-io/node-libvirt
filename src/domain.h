@@ -220,6 +220,7 @@ private:
     void setFlags(const unsigned long flags) { flags_ = flags; }
     void setBandwidth(const unsigned long bandwidth) { bandwidth_ = bandwidth; }
     void setDestname(const std::string &destname) { destname_ = destname; }
+    void setMigUri(const std::string &miguri) { migration_uri_ = miguri; }
   protected:
     virtual void HandleOKCallback();
   private:
@@ -227,6 +228,7 @@ private:
     virConnectPtr conn_;
     virDomainPtr migrated_;
     std::string destname_;
+    std::string migration_uri_;
     unsigned long flags_;
     unsigned long bandwidth_;
   };
