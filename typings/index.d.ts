@@ -522,6 +522,37 @@ export declare interface Hypervisor {
      */
     getBaselineCPUAsync(cpuXmls: Array<string>, flags?: Array<number>): bluebird<string>;
     /**
+     * Computes the most feature-rich CPU which is compatible with all given host CPUs. 
+     * If `flags` includes `VIR_CONNECT_BASELINE_CPU_EXPAND_FEATURES` then libvirt will explicitly list
+     * all CPU features that are part of the host CPU, without this flag features that are part of 
+     * the CPU model will not be listed. If `flags` includes `VIR_CONNECT_BASELINE_CPU_MIGRATABLE`, the resulting 
+     * CPU will not include features that block migration.
+     * @param {string} emulator path to emulator binary (domain/devices/emulator)
+     * @param {string} arch CPU architecture (domain/os/type/arch)
+     * @param {string} machine machine type (domain/os/type/machine)
+     * @param {string} virttype virtualization type (domain/type)
+     * @param {Array<string>} cpuXmls array of XML descriptions of host CPUs
+     * @param {Array<number>} [flags] flags from BaselineCPUFlags. The bitwise-OR will be done internally
+     * @param {function(Error, string)} callback XML description of the computed CPU or NULL on error.
+     */
+    getBaselineHypervisorCPU(emulator: string, arch: string, machine: string, virttype: string, cpuXmls: Array<string>, callback: (error: Error, result: string) => void): void;
+    getBaselineHypervisorCPU(emulator: string, arch: string, machine: string, virttype: string, cpuXmls: Array<string>, flags: Array<number>, callback: (error: Error, result: string) => void): void;
+    /**
+     * Computes the most feature-rich CPU which is compatible with all given host CPUs. 
+     * If `flags` includes `VIR_CONNECT_BASELINE_CPU_EXPAND_FEATURES` then libvirt will explicitly list
+     * all CPU features that are part of the host CPU, without this flag features that are part of 
+     * the CPU model will not be listed. If `flags` includes `VIR_CONNECT_BASELINE_CPU_MIGRATABLE`, the resulting 
+     * CPU will not include features that block migration.
+     * @param {string} emulator path to emulator binary (domain/devices/emulator)
+     * @param {string} arch CPU architecture (domain/os/type/arch)
+     * @param {string} machine machine type (domain/os/type/machine)
+     * @param {string} virttype virtualization type (domain/type)
+     * @param {Array<string>} cpuXmls array of XML descriptions of host CPUs
+     * @param {Array<number>} [flags] flags from BaselineCPUFlags. The bitwise-OR will be done internally
+     * @returns {bluebird<string>} XML description of the computed CPU (caller frees) or NULL on error.
+     */
+    getBaselineHypervisorCPUAsync(emulator: string, arch: string, machine: string, virttype: string, cpuXmls: Array<string>, flags?: Array<number>): bluebird<string>;
+    /**
      * Provides capabilities of the hypervisor / driver.
      * @param {function(Error, string)} callback NULL in case of error, or an XML string defining the capabilities.
      */
