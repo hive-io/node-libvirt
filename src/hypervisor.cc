@@ -44,7 +44,9 @@ void Hypervisor::Initialize(Handle<Object> exports)
   Nan::SetPrototypeMethod(t, "getMaxVcpus",             GetMaxVcpus);
   Nan::SetPrototypeMethod(t, "setKeepAlive",            SetKeepAlive);
   Nan::SetPrototypeMethod(t, "getBaselineCPU",          GetBaselineCPU);
+  #if LIBVIR_CHECK_VERSION(4,4,0)
   Nan::SetPrototypeMethod(t, "getBaselineHypervisorCPU", GetBaselineHypervisorCPU);
+  #endif
   Nan::SetPrototypeMethod(t, "compareCPU",              CompareCPU);
 
   Nan::SetPrototypeMethod(t, "listDefinedDomains",      ListDefinedDomains);
@@ -557,6 +559,7 @@ NLV_WORKER_EXECUTE(Hypervisor, GetBaselineCPU)
   data_ = result;
 }
 
+#if LIBVIR_CHECK_VERSION(4,4,0)
 NAN_METHOD(Hypervisor::GetBaselineHypervisorCPU)
 {
   Nan::HandleScope scope;
@@ -590,7 +593,9 @@ NAN_METHOD(Hypervisor::GetBaselineHypervisorCPU)
   Nan::AsyncQueueWorker(new GetBaselineHypervisorCPUWorker(callback, hypervisor->virHandle(), emulator, arch, machine, virttype, cpus, count, flags));
   return;
 }
+#endif
 
+#if LIBVIR_CHECK_VERSION(4,4,0)
 NLV_WORKER_EXECUTE(Hypervisor, GetBaselineHypervisorCPU)
 {
   NLV_WORKER_ASSERT_CONNECTION();
@@ -608,6 +613,7 @@ NLV_WORKER_EXECUTE(Hypervisor, GetBaselineHypervisorCPU)
 
   data_ = result;
 }
+#endif
 
 NAN_METHOD(Hypervisor::CompareCPU)
 {

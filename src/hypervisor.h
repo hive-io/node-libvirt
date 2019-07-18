@@ -62,7 +62,9 @@ private:
   static NAN_METHOD(GetMaxVcpus);
   static NAN_METHOD(SetKeepAlive);
   static NAN_METHOD(GetBaselineCPU);
+  #if LIBVIR_CHECK_VERSION(4,4,0)
   static NAN_METHOD(GetBaselineHypervisorCPU);
+  #endif
 
   //static NAN_METHOD(ListAllDomains);
   static NAN_METHOD(ListDefinedDomains);
@@ -205,6 +207,7 @@ private:
     int flags_;
   };
 
+#if LIBVIR_CHECK_VERSION(4,4,0)
   class GetBaselineHypervisorCPUWorker : public NLVStringReturnWorker<virConnectPtr, std::string> {
   public:
     GetBaselineHypervisorCPUWorker(Nan::Callback *callback, virConnectPtr handle, std::string emulator, std::string arch, std::string machine, std::string virttype, char **cpus, int count, int flags)
@@ -220,6 +223,7 @@ private:
     int count_;
     int flags_;
   };
+#endif
 
   class GetNodeSecurityModelWorker : public NLVAsyncWorker<virConnectPtr> {
   public:
