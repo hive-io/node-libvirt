@@ -44,6 +44,7 @@ void Hypervisor::Initialize(Handle<Object> exports)
   Nan::SetPrototypeMethod(t, "getMaxVcpus",             GetMaxVcpus);
   Nan::SetPrototypeMethod(t, "setKeepAlive",            SetKeepAlive);
   Nan::SetPrototypeMethod(t, "getBaselineCPU",          GetBaselineCPU);
+  Nan::SetPrototypeMethod(t, "getBaselineHypervisorCPU", GetBaselineHypervisorCPU);
   Nan::SetPrototypeMethod(t, "compareCPU",              CompareCPU);
 
   Nan::SetPrototypeMethod(t, "listDefinedDomains",      ListDefinedDomains);
@@ -512,8 +513,7 @@ NAN_METHOD(Hypervisor::GetBaselineCPU)
 {
   Nan::HandleScope scope;
 
-  if (info.Length() == 0 ||
-      (info.Length() < 3 && (!info[0]->IsArray() && !info[1]->IsArray() && !info[2]->IsFunction()))) {
+  if (info.Length() < 3 || !(info[0]->IsArray() && info[1]->IsArray() && info[2]->IsFunction())) {
     Nan::ThrowTypeError("You must specify an array with two cpu descriptions, flags and a callback");
     return;
   }
@@ -543,6 +543,58 @@ NLV_WORKER_EXECUTE(Hypervisor, GetBaselineCPU)
 {
   NLV_WORKER_ASSERT_CONNECTION();
   const char *result = virConnectBaselineCPU(Handle(), (const char**)cpus_, count_, flags_);
+  for (int i = 0; i < count_; ++i) {
+    free(cpus_[i]);
+  }
+
+  delete [] cpus_;
+
+  if (result == NULL) {
+    SET_ERROR_WITH_CONTEXT(virSaveLastError());
+    return;
+  }
+
+  data_ = result;
+}
+
+NAN_METHOD(Hypervisor::GetBaselineHypervisorCPU)
+{
+  Nan::HandleScope scope;
+
+  if (info.Length() < 7 || !(info[0]->IsString() && info[1]->IsString() && info[2]->IsString() && info[3]->IsString() && info[4]->IsArray() && info[5]->IsArray() && info[6]->IsFunction())) {
+    Nan::ThrowTypeError("You must specify emulator, arch, machine, virttype, an array with two or more cpu descriptions, flags and a callback");
+    return;
+  }
+
+  std::string emulator = *Nan::Utf8String(info[0]->ToString());
+  std::string arch = *Nan::Utf8String(info[1]->ToString());
+  std::string machine = *Nan::Utf8String(info[2]->ToString());
+  std::string virttype = *Nan::Utf8String(info[3]->ToString());
+  Local<Array> cpusArguments = info[4].As<Array>();
+
+  int flags = 0;
+  Local<Array> flags_ = Local<Array>::Cast(info[5]);
+  unsigned int length = flags_->Length();
+  for (unsigned int i = 0; i < length; i++)
+    flags |= flags_->Get(Nan::New<Integer>(i))->Int32Value();
+  
+  int count = cpusArguments->Length();
+  char **cpus = new char*[count + 1];
+  cpus[count] = NULL;
+  for (int i = 0; i < count; ++i) {
+    cpus[i] = strdup(*Nan::Utf8String(cpusArguments->Get(Nan::New(i))->ToString()));
+  }
+
+  Nan::Callback *callback = new Nan::Callback(info[6].As<Function>());
+  Hypervisor *hypervisor = Hypervisor::Unwrap(info.This());
+  Nan::AsyncQueueWorker(new GetBaselineHypervisorCPUWorker(callback, hypervisor->virHandle(), emulator, arch, machine, virttype, cpus, count, flags));
+  return;
+}
+
+NLV_WORKER_EXECUTE(Hypervisor, GetBaselineHypervisorCPU)
+{
+  NLV_WORKER_ASSERT_CONNECTION();
+  const char *result = virConnectBaselineHypervisorCPU(Handle(), emulator_.c_str(), arch_.c_str(), machine_.c_str(), virttype_.c_str(), (const char**)cpus_, count_, flags_);
   for (int i = 0; i < count_; ++i) {
     free(cpus_[i]);
   }

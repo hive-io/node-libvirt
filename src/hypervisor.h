@@ -62,6 +62,7 @@ private:
   static NAN_METHOD(GetMaxVcpus);
   static NAN_METHOD(SetKeepAlive);
   static NAN_METHOD(GetBaselineCPU);
+  static NAN_METHOD(GetBaselineHypervisorCPU);
 
   //static NAN_METHOD(ListAllDomains);
   static NAN_METHOD(ListDefinedDomains);
@@ -199,6 +200,22 @@ private:
         cpus_(cpus), count_(count), flags_(flags) {}
     void Execute();
   private:
+    char **cpus_;
+    int count_;
+    int flags_;
+  };
+
+  class GetBaselineHypervisorCPUWorker : public NLVStringReturnWorker<virConnectPtr, std::string> {
+  public:
+    GetBaselineHypervisorCPUWorker(Nan::Callback *callback, virConnectPtr handle, std::string emulator, std::string arch, std::string machine, std::string virttype, char **cpus, int count, int flags)
+      : NLVStringReturnWorker(callback, handle),
+        emulator_(emulator), arch_(arch), machine_(machine), virttype_(virttype), cpus_(cpus), count_(count), flags_(flags) {}
+    void Execute();
+  private:
+    std::string emulator_;
+    std::string arch_;
+    std::string machine_;
+    std::string virttype_;
     char **cpus_;
     int count_;
     int flags_;
