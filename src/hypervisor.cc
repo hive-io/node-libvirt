@@ -620,7 +620,7 @@ NAN_METHOD(Hypervisor::GetDomainCapabilities)
 {
   Nan::HandleScope scope;
 
-  if (info.Length() < 5 || !(info[0]->IsString() && info[1]->IsString() && info[2]->IsString() && info[3]->IsString() && info[6]->IsFunction())) {
+  if (info.Length() < 5 || !(info[0]->IsString() && info[1]->IsString() && info[2]->IsString() && info[3]->IsString() && info[4]->IsFunction())) {
     Nan::ThrowTypeError("You must specify emulator, arch, machine, virttype and a callback");
     return;
   }
