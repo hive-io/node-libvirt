@@ -226,9 +226,9 @@ private:
   };
 #endif
 
-  class GetDomainCapabilitiesCPUWorker : public NLVStringReturnWorker<virConnectPtr, std::string> {
+  class GetDomainCapabilitiesWorker : public NLVStringReturnWorker<virConnectPtr, std::string> {
   public:
-    GetDomainCapabilitiesCPUWorker(Nan::Callback *callback, virConnectPtr handle, std::string emulator, std::string arch, std::string machine, std::string virttype, int flags)
+    GetDomainCapabilitiesWorker(Nan::Callback *callback, virConnectPtr handle, std::string emulator, std::string arch, std::string machine, std::string virttype, int flags)
       : NLVStringReturnWorker(callback, handle),
         emulator_(emulator), arch_(arch), machine_(machine), virttype_(virttype), flags_(flags) {}
     void Execute();

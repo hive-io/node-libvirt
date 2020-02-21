@@ -638,7 +638,7 @@ NAN_METHOD(Hypervisor::GetDomainCapabilities)
   
   Nan::Callback *callback = new Nan::Callback(info[6].As<Function>());
   Hypervisor *hypervisor = Hypervisor::Unwrap(info.This());
-  Nan::AsyncQueueWorker(new GetDomainCapabilitiesCPUWorker(callback, hypervisor->virHandle(), emulator, arch, machine, virttype, flags));
+  Nan::AsyncQueueWorker(new GetDomainCapabilitiesWorker(callback, hypervisor->virHandle(), emulator, arch, machine, virttype, flags));
   return;
 }
 
