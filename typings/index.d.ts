@@ -573,7 +573,7 @@ export declare interface Hypervisor {
      * @returns {string} XML description of the computed CPU (caller frees) or NULL on error.
      */
     getDomainCapabilities(emulator: string, arch: string, machine: string, virttype: string, callback: (error: Error, result: string) => void): void;
-    getDomainCapabilities(emulator: string, arch: string, machine: string, virttype: string, flags: Array<int>, callback: (error: Error, result: string) => void): void;
+    getDomainCapabilities(emulator: string, arch: string, machine: string, virttype: string, flags: Array<number>, callback: (error: Error, result: string) => void): void;
     /**
      * Provides capabilities of domain on a particular hypervisor. 
      * If `flags` should always be 0
@@ -585,7 +585,7 @@ export declare interface Hypervisor {
      * @returns {bluebird<string>} XML description of the computed CPU (caller frees) or NULL on error.
      */
     getDomainCapabilitiesAsync(emulator: string, arch: string, machine: string, virttype: string): bluebird<string>;
-    getDomainCapabilitiesAsync(emulator: string, arch: string, machine: string, virttype: string, flags: Array<int>): bluebird<string>;
+    getDomainCapabilitiesAsync(emulator: string, arch: string, machine: string, virttype: string, flags: Array<numbr>): bluebird<string>;
     /**
      * Provides the version of libvirt used by the daemon running on the host
      * @param {function(Error, number)} callback libvirt library version used on the connection
