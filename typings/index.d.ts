@@ -563,6 +563,30 @@ export declare interface Hypervisor {
      */
     getCapabilitiesAsync(): bluebird<string>;
     /**
+     * Provides capabilities of domain on a particular hypervisor. 
+     * If `flags` should always be 0
+     * @param {string} emulator path to emulator binary (domain/devices/emulator)
+     * @param {string} arch CPU architecture (domain/os/type/arch)
+     * @param {string} machine machine type (domain/os/type/machine)
+     * @param {string} virttype virtualization type (domain/type)
+     * @param {Array<number>} [flags] flags from BaselineCPUFlags. The bitwise-OR will be done internally
+     * @returns {string} XML description of the computed CPU (caller frees) or NULL on error.
+     */
+    getDomainCapabilities(emulator: string, arch: string, machine: string, virttype: string, callback: (error: Error, result: string) => void): void;
+    getDomainCapabilities(emulator: string, arch: string, machine: string, virttype: string, flags: Array<int>, callback: (error: Error, result: string) => void): void;
+    /**
+     * Provides capabilities of domain on a particular hypervisor. 
+     * If `flags` should always be 0
+     * @param {string} emulator path to emulator binary (domain/devices/emulator)
+     * @param {string} arch CPU architecture (domain/os/type/arch)
+     * @param {string} machine machine type (domain/os/type/machine)
+     * @param {string} virttype virtualization type (domain/type)
+     * @param {Array<number>} [flags] flags from BaselineCPUFlags. The bitwise-OR will be done internally
+     * @returns {bluebird<string>} XML description of the computed CPU (caller frees) or NULL on error.
+     */
+    getDomainCapabilitiesAsync(emulator: string, arch: string, machine: string, virttype: string): bluebird<string>;
+    getDomainCapabilitiesAsync(emulator: string, arch: string, machine: string, virttype: string, flags: Array<int>): bluebird<string>;
+    /**
      * Provides the version of libvirt used by the daemon running on the host
      * @param {function(Error, number)} callback libvirt library version used on the connection
      */
@@ -741,8 +765,8 @@ export declare interface Domain {
      * @param {number | Array<number>} flags bitwise OR or array of DomainSnapshotDeleteFlags 
      * @param {function(Error, void)} callback returns error incase of failure, nothing otherwise
      */
-    deleteSnapshot(name: string, callback:(error: Error, result: void) => void): void;
-    deleteSnapshot(name: string, flags: number | Array<number>, callback:(error: Error, result: void) => void): void;
+    deleteSnapshot(name: string, callback: (error: Error, result: void) => void): void;
+    deleteSnapshot(name: string, flags: number | Array<number>, callback: (error: Error, result: void) => void): void;
     /**
      * Delete the snapshot.
      * @param {string} name name of the snapshot
