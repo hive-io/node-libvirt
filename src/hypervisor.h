@@ -65,6 +65,7 @@ private:
   #if LIBVIR_CHECK_VERSION(4,4,0)
   static NAN_METHOD(GetBaselineHypervisorCPU);
   #endif
+  static NAN_METHOD(GetDomainCapabilities);
 
   //static NAN_METHOD(ListAllDomains);
   static NAN_METHOD(ListDefinedDomains);
@@ -224,6 +225,20 @@ private:
     int flags_;
   };
 #endif
+
+  class GetDomainCapabilitiesWorker : public NLVStringReturnWorker<virConnectPtr, std::string> {
+  public:
+    GetDomainCapabilitiesWorker(Nan::Callback *callback, virConnectPtr handle, std::string emulator, std::string arch, std::string machine, std::string virttype, int flags)
+      : NLVStringReturnWorker(callback, handle),
+        emulator_(emulator), arch_(arch), machine_(machine), virttype_(virttype), flags_(flags) {}
+    void Execute();
+  private:
+    std::string emulator_;
+    std::string arch_;
+    std::string machine_;
+    std::string virttype_;
+    int flags_;
+  };
 
   class GetNodeSecurityModelWorker : public NLVAsyncWorker<virConnectPtr> {
   public:

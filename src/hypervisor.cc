@@ -44,6 +44,7 @@ void Hypervisor::Initialize(Handle<Object> exports)
   Nan::SetPrototypeMethod(t, "getMaxVcpus",             GetMaxVcpus);
   Nan::SetPrototypeMethod(t, "setKeepAlive",            SetKeepAlive);
   Nan::SetPrototypeMethod(t, "getBaselineCPU",          GetBaselineCPU);
+  Nan::SetPrototypeMethod(t, "getDomainCapabilities",   GetDomainCapabilities);
   #if LIBVIR_CHECK_VERSION(4,4,0)
   Nan::SetPrototypeMethod(t, "getBaselineHypervisorCPU", GetBaselineHypervisorCPU);
   #endif
@@ -614,6 +615,45 @@ NLV_WORKER_EXECUTE(Hypervisor, GetBaselineHypervisorCPU)
   data_ = result;
 }
 #endif
+
+NAN_METHOD(Hypervisor::GetDomainCapabilities)
+{
+  Nan::HandleScope scope;
+
+  if (info.Length() < 5 || !(info[0]->IsString() && info[1]->IsString() && info[2]->IsString() && info[3]->IsString() && info[6]->IsFunction())) {
+    Nan::ThrowTypeError("You must specify emulator, arch, machine, virttype and a callback");
+    return;
+  }
+
+  std::string emulator = *Nan::Utf8String(info[0]->ToString());
+  std::string arch = *Nan::Utf8String(info[1]->ToString());
+  std::string machine = *Nan::Utf8String(info[2]->ToString());
+  std::string virttype = *Nan::Utf8String(info[3]->ToString());
+
+  int flags = 0;
+  // Local<Array> flags_ = Local<Array>::Cast(info[5]);
+  // unsigned int length = flags_->Length();
+  // for (unsigned int i = 0; i < length; i++)
+  //   flags |= flags_->Get(Nan::New<Integer>(i))->Int32Value();
+  
+  Nan::Callback *callback = new Nan::Callback(info[6].As<Function>());
+  Hypervisor *hypervisor = Hypervisor::Unwrap(info.This());
+  Nan::AsyncQueueWorker(new GetDomainCapabilitiesWorker(callback, hypervisor->virHandle(), emulator, arch, machine, virttype, flags));
+  return;
+}
+
+NLV_WORKER_EXECUTE(Hypervisor, GetDomainCapabilities)
+{
+  NLV_WORKER_ASSERT_CONNECTION();
+  const char *result = virConnectGetDomainCapabilities(Handle(), emulator_.c_str(), arch_.c_str(), machine_.c_str(), virttype_.c_str(), flags_);
+
+  if (result == NULL) {
+    SET_ERROR_WITH_CONTEXT(virSaveLastError());
+    return;
+  }
+
+  data_ = result;
+}
 
 NAN_METHOD(Hypervisor::CompareCPU)
 {
