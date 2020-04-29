@@ -744,6 +744,15 @@ export declare interface Hypervisor {
 
 export declare interface Domain {
     /**
+     * Requests that the current background job be aborted at the soonest opportunity
+     * @param callback Requests that the current background job be aborted at the soonest opportunity
+     */
+    abortCurrentJob(callback: (error: Error, result: void) => void);
+    /**
+     * Requests that the current background job be aborted at the soonest opportunity
+     */
+    abortCurrentJobAsync(): bluebird<void>;
+    /**
      * Create a virtual device attachment to backend. 
      * @param {string} deviceXml pointer to XML description of one device
      * @param {Array<DomainDeviceModifyFlags>} [flags] Array of `DomainDeviceModifyFlags`. 
